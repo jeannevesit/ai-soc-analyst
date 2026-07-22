@@ -1,0 +1,110 @@
+{
+  "name": "AI SOC Analyst (Real-Time Webhook Triage)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "triage-alert",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        380,
+        240
+      ],
+      "id": "e458e0a8-b63d-4c3e-9bf8-927914bca111",
+      "name": "Webhook Trigger (SIEM Alert)"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Triage the incoming security alert received in the webhook input. The alert payload contains: alert ID, title, indicator, indicator_type, and details.\n\nSteps to perform:\n1. Read the alert payload from the input.\n2. If the alert indicator_type is 'IP' or 'URL', query its reputation using the 'analyze_indicator' tool (VirusTotal).\n3. Map the alert activity to appropriate MITRE ATT&CK techniques.\n4. If the alert is classified as HIGH or CRITICAL severity AND has an IP indicator, invoke the 'block_attacker_ip' tool to block the attacker at the perimeter firewall.\n5. Resolve the alert in the SIEM using the 'close_siem_alert' tool. Set the status to 'RESOLVED' and write a detailed incident review and the MITRE ATT&CK codes in 'resolution_notes'.\n6. Compose a formatted incident report summary and send it to the SOC manager using the 'send_security_email' tool.",
+        "options": {
+          "systemMessage": "You are a Lead L2 Security Operations Center (SOC) Analyst. You perform real-time triage, active containment, and write concise technical incident reports."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        600,
+        240
+      ],
+      "id": "fc52e128-409d-40de-8d07-6bcfdbfcae2c",
+      "name": "AI SOC Analyst"
+    },
+    {
+      "parameters": {
+        "modelName": "gemini-1.5-flash",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        480,
+        420
+      ],
+      "id": "73d421cb-402a-43c3-9d41-e94553b47e58",
+      "name": "Google Gemini"
+    },
+    {
+      "parameters": {
+        "type": "sse",
+        "url": "http://mcp-server:8500/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolMcpClient",
+      "typeVersion": 1,
+      "position": [
+        720,
+        420
+      ],
+      "id": "79b4a4cb-f0be-451e-b8eb-9d8544cb4422",
+      "name": "MCP Security Tools"
+    }
+  ],
+  "connections": {
+    "Webhook Trigger (SIEM Alert)": {
+      "main": [
+        [
+          {
+            "node": "AI SOC Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI SOC Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Security Tools": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI SOC Analyst",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionTimeout": 3600
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": ""
+  },
+  "tags": []
+}

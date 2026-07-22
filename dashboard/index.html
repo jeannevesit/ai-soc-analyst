@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini AI Security Operations Center (SOC)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Background glow effects -->
+  <div class="glow-bg glow-primary"></div>
+  <div class="glow-bg glow-secondary"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="pulse-indicator"></div>
+        <h1>GEMINI<span>.SOC</span></h1>
+        <span class="badge">AI ANALYST L1/L2</span>
+      </div>
+      <div class="header-status">
+        <span class="status-text">Pipeline Status: <span class="status-online">ACTIVE</span></span>
+        <div class="time-widget" id="utc-clock">00:00:00 UTC</div>
+      </div>
+    </header>
+
+    <!-- Stats Dashboard Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="stat-content">
+          <h3>Total Ingested Alerts</h3>
+          <p id="stat-total">0</p>
+        </div>
+      </div>
+      <div class="stat-card urgent">
+        <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="stat-content">
+          <h3>Escalations / Criticals</h3>
+          <p id="stat-critical">0</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="stat-content">
+          <h3>Top Threat Actor IP</h3>
+          <p id="stat-top-ip">--</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa-solid fa-crosshairs"></i></div>
+        <div class="stat-content">
+          <h3>Primary MITRE Technique</h3>
+          <p id="stat-mitre">--</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Alert Console -->
+    <main class="console-wrapper">
+      <div class="console-header">
+        <h2><i class="fa-solid fa-terminal"></i> Live Security Incident Feed</h2>
+        <div class="console-actions">
+          <button id="btn-clear" class="btn btn-secondary"><i class="fa-solid fa-circle-minus"></i> Clear View</button>
+          <span class="feed-count">Showing last 25 events</span>
+        </div>
+      </div>
+
+      <!-- Real-time Alerts Feed -->
+      <div class="alerts-feed" id="alerts-container">
+        <!-- Loader / Empty State -->
+        <div class="loading-state" id="loader">
+          <div class="spinner"></div>
+          <p>Listening for telemetry events from honeypot VM...</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal for Detailed AI Incident Report -->
+    <div class="modal-overlay" id="detail-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title">
+            <span class="severity-badge" id="modal-severity">HIGH</span>
+            <h2>Incident Report & AI Verdict</h2>
+          </div>
+          <button class="close-btn" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="report-section">
+            <h4><i class="fa-solid fa-magnifying-glass"></i> AI Incident Summary</h4>
+            <div class="report-text" id="modal-summary">Loading...</div>
+          </div>
+          
+          <div class="report-section-grid">
+            <div class="report-section">
+              <h4><i class="fa-solid fa-passport"></i> Attack Vector Details</h4>
+              <table class="details-table">
+                <tr><th>Event ID</th><td id="modal-event-id">--</td></tr>
+                <tr><th>Source IP</th><td id="modal-src-ip">--</td></tr>
+                <tr><th>Timestamp</th><td id="modal-timestamp">--</td></tr>
+                <tr><th>Target Username</th><td id="modal-user">--</td></tr>
+                <tr><th>Target Password</th><td id="modal-pass">--</td></tr>
+                <tr><th>Command Input</th><td id="modal-command"><code class="inline-code">--</code></td></tr>
+              </table>
+            </div>
+
+            <div class="report-section">
+              <h4><i class="fa-solid fa-bug"></i> VirusTotal IP Threat Intelligence</h4>
+              <div id="vt-reputation-summary">
+                <table class="details-table">
+                  <tr><th>Malicious Votes</th><td id="modal-vt-malicious">0 / 0</td></tr>
+                  <tr><th>Overall Reputation</th><td id="modal-vt-reputation">0</td></tr>
+                  <tr><th>Network ASN</th><td id="modal-vt-asn">--</td></tr>
+                  <tr><th>ISP Owner</th><td id="modal-vt-owner">--</td></tr>
+                  <tr><th>Country</th><td id="modal-vt-country">--</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="report-section">
+            <h4><i class="fa-solid fa-list-check"></i> Mitigation & Playbook Recommendations</h4>
+            <div class="report-text playbook" id="modal-playbook">Loading...</div>
+          </div>
+
+          <div class="report-section">
+            <h4><i class="fa-solid fa-shield-halved"></i> MITRE ATT&CK Mapping</h4>
+            <div class="mitre-tags" id="modal-mitre-tags">
+              <!-- Dynamically populated tags -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Built with Google Cloud (GCE, Cloud Logging, Pub/Sub, Cloud Functions, Firestore) & Gemini 2.5 Flash.</p>
+      <p>&copy; 2026 AI SOC Analyst Project Dashboard</p>
+    </footer>
+  </div>
+
+  <!-- Firebase configuration and app logic scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

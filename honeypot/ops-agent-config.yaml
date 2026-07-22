@@ -1,0 +1,21 @@
+# Google Cloud Ops Agent Configuration
+# Place this in /etc/google-cloud-ops-agent/config.yaml on the honeypot VM
+
+logging:
+  receivers:
+    cowrie_log:
+      type: files
+      include_paths:
+        - /home/cowrie/cowrie/var/log/cowrie/cowrie.json
+  processors:
+    parse_json:
+      type: parse_json
+      time_key: timestamp
+      time_format: "%Y-%m-%dT%H:%M:%S.%fZ"
+  service:
+    pipelines:
+      cowrie_pipeline:
+        receivers:
+          - cowrie_log
+        processors:
+          - parse_json

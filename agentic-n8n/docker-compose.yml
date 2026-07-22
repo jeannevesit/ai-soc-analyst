@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: soc-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PORT=5678
+      - N8N_SECURE_COOKIE=false
+      - N8N_ENCRYPTION_KEY=soc_analyst_secret_key_999
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - soc-network
+
+  mock-siem:
+    build:
+      context: ./mock-siem
+      dockerfile: Dockerfile
+    container_name: mock-siem
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mock-siem/database.json:/app/database.json
+    networks:
+      - soc-network
+
+  mcp-server:
+    build:
+      context: ./mcp-server
+      dockerfile: Dockerfile
+    container_name: mcp-server
+    restart: unless-stopped
+    ports:
+      - "8500:8500"
+    environment:
+      - SIEM_URL=http://mock-siem:8000
+      - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY:-}
+    volumes:
+      - ./mcp-server:/app
+    depends_on:
+      - mock-siem
+    networks:
+      - soc-network
+
+  threat-generator:
+    build:
+      context: ./mock-siem
+      dockerfile: Dockerfile
+    container_name: threat-generator
+    command: python threat_generator.py
+    restart: unless-stopped
+    environment:
+      - SIEM_URL=http://mock-siem:8000
+      - N8N_WEBHOOK_URL=http://soc-n8n:5678/webhook-test/triage-alert
+    depends_on:
+      - mock-siem
+      - n8n
+    networks:
+      - soc-network
+
+volumes:
+  n8n_data:
+
+networks:
+  soc-network:
+    name: soc-network
+    driver: bridge
