@@ -411,7 +411,10 @@ def index():
                 const openCount = localAlerts.filter(a => a.status === 'OPEN').length;
                 document.getElementById('open-count').textContent = `${openCount} Open`;
 
-                localAlerts.forEach(alert => {
+                // Sort alerts newest to oldest
+                const sortedAlerts = [...localAlerts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                sortedAlerts.forEach(alert => {
                     const item = document.createElement('div');
                     item.className = `alert-item ${activeAlertId === alert.id ? 'active' : ''}`;
                     item.onclick = () => selectAlert(alert.id);
@@ -419,12 +422,23 @@ def index():
                     const severityClass = `severity-${alert.severity.toLowerCase()}`;
                     const statusClass = `status-${alert.status.toLowerCase()}`;
                     
-                    const formattedTime = alert.timestamp.substring(11, 19);
+                    let formattedTime = "";
+                    try {
+                        formattedTime = new Date(alert.timestamp).toLocaleTimeString("en-US", {
+                            timeZone: "America/New_York",
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            hour12: false
+                        }) + " EST";
+                    } catch (e) {
+                        formattedTime = alert.timestamp.substring(11, 19) + " UTC";
+                    }
 
                     item.innerHTML = `
                         <div class="alert-meta">
                             <span class="badge ${severityClass}">${alert.severity}</span>
-                            <span>${formattedTime} UTC</span>
+                            <span>${formattedTime}</span>
                         </div>
                         <div class="alert-title">${alert.title}</div>
                         <div class="alert-meta" style="margin: 0.5rem 0 0 0;">
@@ -453,11 +467,19 @@ def index():
                 const severityClass = `severity-${alert.severity.toLowerCase()}`;
                 const statusClass = `status-${alert.status.toLowerCase()}`;
 
+                let detailsTime = alert.timestamp;
+                try {
+                    detailsTime = new Date(alert.timestamp).toLocaleString("en-US", {
+                        timeZone: "America/New_York",
+                        hour12: false
+                    }) + " EST";
+                } catch(e) {}
+
                 workbench.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
                         <div>
                             <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">${alert.title}</h2>
-                            <div style="font-size: 0.75rem; color: var(--text-muted);">Timestamp: ${alert.timestamp}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">Timestamp: ${detailsTime}</div>
                         </div>
                         <span class="badge ${statusClass}">${alert.status}</span>
                     </div>
