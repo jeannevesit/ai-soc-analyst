@@ -25,7 +25,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - N8N_WEBHOOK_URL=http://soc-n8n:5678/webhook-test/triage-alert
+      - N8N_WEBHOOK_URL=http://soc-n8n:5678/webhook/triage-alert
     volumes:
       - ./mock-siem/database.json:/app/database.json
     networks:
@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
     environment:
       - SIEM_URL=http://mock-siem:8000
-      - N8N_WEBHOOK_URL=http://soc-n8n:5678/webhook-test/triage-alert
+      - N8N_WEBHOOK_URL=http://soc-n8n:5678/webhook/triage-alert
     depends_on:
       - mock-siem
       - n8n
