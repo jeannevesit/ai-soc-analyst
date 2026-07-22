@@ -1,12 +1,22 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Helper for UTC Clock
+// Helper for Eastern Time (ET) Clock
 function updateClock() {
   const clock = document.getElementById("utc-clock");
   if (clock) {
     const now = new Date();
-    clock.textContent = now.toISOString().replace("T", " ").substring(0, 19) + " UTC";
+    const options = { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
+    const formatter = new Intl.DateTimeFormat("en-US", options);
+    const parts = formatter.formatToParts(now);
+    const year = parts.find(p => p.type === 'year').value;
+    const month = parts.find(p => p.type === 'month').value;
+    const day = parts.find(p => p.type === 'day').value;
+    const hour = parts.find(p => p.type === 'hour').value;
+    const minute = parts.find(p => p.type === 'minute').value;
+    const second = parts.find(p => p.type === 'second').value;
+    const tzName = now.toLocaleDateString("en-US", { timeZone: "America/New_York", timeZoneName: "short" }).split(" ").pop();
+    clock.textContent = `${year}-${month}-${day} ${hour}:${minute}:${second} ${tzName}`;
   }
 }
 setInterval(updateClock, 1000);
@@ -324,13 +334,13 @@ function renderAlertRow(id, incident, prepend = false) {
   const severity = incident.ai_analysis?.severity || "LOW";
   const severityClass = severity.toLowerCase();
   
-  // Format Timestamp
+  // Format Timestamp in Eastern Time (America/New_York)
   let formattedTime = "00:00:00";
   try {
     const rawTime = incident.timestamp;
     if (rawTime) {
       const dt = new Date(rawTime);
-      formattedTime = dt.toISOString().replace("T", " ").substring(11, 19);
+      formattedTime = dt.toLocaleTimeString("en-US", { timeZone: "America/New_York", hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
     }
   } catch (e) {
     console.error("Time format error:", e);
