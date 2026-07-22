@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NevesSec Control Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090c15;
+      --panel: rgba(17, 24, 43, 0.7);
+      --panel-hover: rgba(25, 35, 60, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #007aff;
+      --cyan: #30d5c8;
+      --purple: #bf5af2;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --code-bg: rgba(0, 0, 0, 0.3);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Background Glowing Orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--primary);
+      top: -100px;
+      left: -100px;
+    }
+    .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: var(--purple);
+      bottom: -150px;
+      right: -150px;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    
+    header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    
+    header h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+    }
+    
+    /* Link Cards Grid */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .portal-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .portal-card:hover {
+      background: var(--panel-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0, 122, 255, 0.1);
+    }
+    
+    .card-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      width: 64px;
+      height: 64px;
+      background: rgba(0, 122, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 122, 255, 0.15);
+    }
+    
+    .portal-card:nth-child(2) .card-icon {
+      color: var(--cyan);
+      background: rgba(48, 213, 200, 0.08);
+      border-color: rgba(48, 213, 200, 0.15);
+    }
+    .portal-card:nth-child(3) .card-icon {
+      color: var(--purple);
+      background: rgba(191, 90, 242, 0.08);
+      border-color: rgba(191, 90, 242, 0.15);
+    }
+    
+    .card-info h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .card-url {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: auto;
+      word-break: break-all;
+    }
+    .portal-card:nth-child(2) .card-url { color: var(--cyan); }
+    .portal-card:nth-child(3) .card-url { color: var(--purple); }
+
+    /* Operational Walkthrough Section */
+    .docs-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .docs-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .docs-section h2 i { color: var(--cyan); }
+    
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .step-item {
+      display: flex;
+      gap: 1.25rem;
+    }
+    
+    .step-number {
+      font-size: 0.9rem;
+      font-weight: 800;
+      background: rgba(48, 213, 200, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(48, 213, 200, 0.2);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .step-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    
+    code {
+      font-family: 'Fira Code', monospace;
+      background: var(--code-bg);
+      color: var(--cyan);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    pre {
+      font-family: 'Fira Code', monospace;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text);
+      overflow-x: auto;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="container">
+    <header>
+      <h1>NevesSec <span>Control Center</span></h1>
+      <p>Click the launcher cards below to open the local development containers or the cloud-native live metrics feed.</p>
+    </header>
+
+    <!-- Portal Grid -->
+    <section class="portal-grid">
+      <!-- Card 1: n8n -->
+      <a href="http://localhost:5678" target="_blank" class="portal-card">
+        <div class="card-icon"><i class="fa-solid fa-code-merge"></i></div>
+        <div class="card-info">
+          <h2>n8n Automation Console</h2>
+          <p>Operate, edit, and visually trigger the AI Agent's decision loops. Monitor the execution trace and check step-by-step telemetry actions.</p>
+        </div>
+        <div class="card-url">http://localhost:5678 <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+
+      <!-- Card 2: Mock SIEM -->
+      <a href="https://promoting-basics-postposted-benefits.trycloudflare.com" target="_blank" class="portal-card">
+        <div class="card-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+        <div class="card-info">
+          <h2>Enterprise SIEM Console</h2>
+          <p>Inspect incoming security events and check live threat lists. Watch the alert queue states transition from OPEN to RESOLVED by the AI.</p>
+        </div>
+        <div class="card-url">https://promoting-basics-postposted-benefits.trycloudflare.com <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+
+      <!-- Card 3: GCP Live Feed -->
+      <a href="dashboard/index.html" target="_blank" class="portal-card">
+        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="card-info">
+          <h2>GCP Live Security Dashboard</h2>
+          <p>View the serverless, production-style dashboard tracking live Cowrie SSH Honeypot traffic and Gemini summary verdicts (Track A).</p>
+        </div>
+        <div class="card-url">dashboard/index.html <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+    </section>
+
+    <!-- Detailed Instruction Panel -->
+    <section class="docs-section">
+      <h2><i class="fa-solid fa-circle-info"></i> How to Operate the System</h2>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Start the Environment</h3>
+            <p>Open your computer's terminal, navigate to the project directory, and run the Docker containers to spin up n8n and the SIEM:</p>
+            <pre>cd agentic-n8n<br>docker compose up --build -d</pre>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Register on n8n</h3>
+            <p>Click the <b>n8n Automation Console</b> card above. If it's your first time, create a local admin account. (No licensing or credit card details required).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Import the Workflow</h3>
+            <p>In the n8n side panel, go to <b>Workflows</b> -> click the top-right button -> select <b>Import from File</b>. Choose the file <code>agentic-n8n/workflow.json</code> in this project folder.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Inject API Credentials</h3>
+            <p>Double click the <b>Google Gemini</b> node in n8n. Under <i>Credential for Google Palm API</i>, click "Create New Credential" and paste your free Gemini API key from AI Studio.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Triage Alerts (Run the AI)</h3>
+            <p>Click the <b>Enterprise SIEM Console</b> card to see the mock alert queue. Then, inside your n8n workflow panel, click the green <b>Test Workflow</b> button at the bottom. Watch the AI agent fetch alerts, consult VirusTotal, decide resolutions, and close the alerts automatically!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>AI Security Operations Center (SOC) Console Hub • Managed locally natively or via Docker Containers</p>
+  </footer>
+</body>
+</html>
