@@ -383,20 +383,42 @@ def index():
                         <span>Incident Alerts Queue</span>
                         <span id="open-count" style="font-size: 0.75rem; background: var(--primary); padding: 0.2rem 0.5rem; border-radius: 10px;">0 Open</span>
                     </div>
-                    <!-- Manual Ingestion Form -->
+                    <!-- Manual Ingestion Form with Tabs -->
                     <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.75rem; background: rgba(255, 255, 255, 0.02);">
-                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Manual Threat Ingestion</div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <select id="custom-type" style="background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none; cursor: pointer;">
-                                <option value="URL">URL</option>
-                                <option value="IP">IP Address</option>
-                                <option value="Command">Command</option>
-                            </select>
-                            <input type="text" id="custom-indicator" placeholder="e.g. http://malicious-site.com" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
+                        <div style="display: flex; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; margin-bottom: 0.25rem;">
+                            <button id="tab-btn-indicator" class="tab-btn active" onclick="switchFormTab('indicator')" style="background: none; border: none; color: var(--primary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 0.25rem 0.5rem; outline: none;">Indicator Triage</button>
+                            <button id="tab-btn-audit" class="tab-btn" onclick="switchFormTab('audit')" style="background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 0.25rem 0.5rem; outline: none;">Ad-hoc Audit</button>
                         </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <input type="text" id="custom-title" placeholder="Incident Title (optional)" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
-                            <button class="btn btn-primary" onclick="submitCustomAlert()" style="padding: 0.4rem 1rem; font-size: 0.8rem; border: none; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+
+                        <!-- Form Type 1: Indicator Triage -->
+                        <div id="form-indicator-group" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <select id="custom-type" style="background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none; cursor: pointer;">
+                                    <option value="URL">URL</option>
+                                    <option value="IP">IP Address</option>
+                                    <option value="Command">Command</option>
+                                </select>
+                                <input type="text" id="custom-indicator" placeholder="e.g. http://malicious-site.com" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="text" id="custom-title" placeholder="Incident Title (optional)" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
+                                <button class="btn btn-primary" onclick="submitCustomAlert()" style="padding: 0.4rem 1rem; font-size: 0.8rem; border: none; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+                            </div>
+                        </div>
+
+                        <!-- Form Type 2: Ad-Hoc Audit -->
+                        <div id="form-audit-group" style="display: none; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <select id="audit-source" style="background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none; cursor: pointer;">
+                                    <option value="Email">Phishing Email</option>
+                                    <option value="Log">System / Web Logs</option>
+                                </select>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">Paste raw text below to run an AI audit</span>
+                            </div>
+                            <textarea id="audit-text" placeholder="Paste email body/headers or log contents here..." style="background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; outline: none; min-height: 80px; resize: vertical; font-family: monospace;"></textarea>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="btn btn-primary" onclick="submitAdHocAudit()" style="padding: 0.4rem 1rem; font-size: 0.8rem; border: none; cursor: pointer;"><i class="fa-solid fa-wand-magic-sparkles"></i> Run AI Audit</button>
+                            </div>
                         </div>
                     </div>
                     <div class="alert-list" id="alert-list-container">
@@ -458,6 +480,64 @@ def index():
                         fetchAlerts();
                     } else {
                         alert("Error submitting threat: " + await response.text());
+                    }
+                } catch (e) {
+                    alert("Network error: " + e.message);
+                }
+            }
+
+            function switchFormTab(tab) {
+                const indicatorTabBtn = document.getElementById('tab-btn-indicator');
+                const auditTabBtn = document.getElementById('tab-btn-audit');
+                const indicatorGroup = document.getElementById('form-indicator-group');
+                const auditGroup = document.getElementById('form-audit-group');
+                
+                if (tab === 'indicator') {
+                    indicatorTabBtn.style.color = 'var(--primary)';
+                    auditTabBtn.style.color = 'var(--text-muted)';
+                    indicatorGroup.style.display = 'flex';
+                    auditGroup.style.display = 'none';
+                } else {
+                    indicatorTabBtn.style.color = 'var(--text-muted)';
+                    auditTabBtn.style.color = 'var(--primary)';
+                    indicatorGroup.style.display = 'none';
+                    auditGroup.style.display = 'flex';
+                }
+            }
+
+            async function submitAdHocAudit() {
+                const source = document.getElementById('audit-source').value;
+                const text = document.getElementById('audit-text').value.trim();
+                
+                if (!text) {
+                    alert("Please paste some content to analyze!");
+                    return;
+                }
+                
+                const title = `Ad-Hoc Audit: ${source === 'Email' ? 'Suspicious Email' : 'Raw Log File'}`;
+                
+                const alertPayload = {
+                    title: title,
+                    severity: "HIGH",
+                    timestamp: new Date().toISOString(),
+                    indicator: source === 'Email' ? 'Raw Email Data' : 'Raw Log Data',
+                    indicator_type: source,
+                    details: text
+                };
+                
+                try {
+                    const response = await fetch('/api/alerts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(alertPayload)
+                    });
+                    
+                    if (response.ok) {
+                        alert("Content submitted successfully! Forwarding to AI agent for audit...");
+                        document.getElementById('audit-text').value = '';
+                        fetchAlerts();
+                    } else {
+                        alert("Error submitting audit: " + await response.text());
                     }
                 } catch (e) {
                     alert("Network error: " + e.message);
