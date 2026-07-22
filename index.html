@@ -310,53 +310,6 @@
         <div class="card-url">dashboard/index.html <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
       </a>
     </section>
-
-    <!-- Detailed Instruction Panel -->
-    <section class="docs-section">
-      <h2><i class="fa-solid fa-circle-info"></i> How to Operate the System</h2>
-      <div class="steps">
-        <div class="step-item">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <h3>Start the Environment</h3>
-            <p>Open your computer's terminal, navigate to the project directory, and run the Docker containers to spin up n8n and the SIEM:</p>
-            <pre>cd agentic-n8n<br>docker compose up --build -d</pre>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <h3>Register on n8n</h3>
-            <p>Click the <b>n8n Automation Console</b> card above. If it's your first time, create a local admin account. (No licensing or credit card details required).</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <h3>Import the Workflow</h3>
-            <p>In the n8n side panel, go to <b>Workflows</b> -> click the top-right button -> select <b>Import from File</b>. Choose the file <code>agentic-n8n/workflow.json</code> in this project folder.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-number">4</div>
-          <div class="step-content">
-            <h3>Inject API Credentials</h3>
-            <p>Double click the <b>Google Gemini</b> node in n8n. Under <i>Credential for Google Palm API</i>, click "Create New Credential" and paste your free Gemini API key from AI Studio.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-number">5</div>
-          <div class="step-content">
-            <h3>Triage Alerts (Run the AI)</h3>
-            <p>Click the <b>Enterprise SIEM Console</b> card to see the mock alert queue. Then, inside your n8n workflow panel, click the green <b>Test Workflow</b> button at the bottom. Watch the AI agent fetch alerts, consult VirusTotal, decide resolutions, and close the alerts automatically!</p>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
   <footer>
