@@ -1,9 +1,12 @@
 import os
 import json
 import logging
+import requests
 from typing import List, Optional
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
+
+N8N_WEBHOOK_URL = os.environ.get("N8N_WEBHOOK_URL", "")
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -95,6 +98,14 @@ def create_alert(payload: CreateAlertRequest):
     except Exception as e:
         logger.error(f"Failed to persist new alert: {str(e)}")
         
+    # Forward to n8n Webhook to trigger autonomous triage
+    if N8N_WEBHOOK_URL:
+        try:
+            logger.info(f"Forwarding alert {new_id} to n8n webhook: {N8N_WEBHOOK_URL}")
+            requests.post(N8N_WEBHOOK_URL, json=alert, timeout=2)
+        except Exception as e:
+            logger.error(f"Failed to forward webhook to n8n: {str(e)}")
+            
     return alert
 
 @app.get("/api/alerts", response_model=List[Alert])
@@ -372,6 +383,22 @@ def index():
                         <span>Incident Alerts Queue</span>
                         <span id="open-count" style="font-size: 0.75rem; background: var(--primary); padding: 0.2rem 0.5rem; border-radius: 10px;">0 Open</span>
                     </div>
+                    <!-- Manual Ingestion Form -->
+                    <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.75rem; background: rgba(255, 255, 255, 0.02);">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Manual Threat Ingestion</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="custom-type" style="background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none; cursor: pointer;">
+                                <option value="URL">URL</option>
+                                <option value="IP">IP Address</option>
+                                <option value="Command">Command</option>
+                            </select>
+                            <input type="text" id="custom-indicator" placeholder="e.g. http://malicious-site.com" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="custom-title" placeholder="Incident Title (optional)" style="flex: 1; background: var(--bg-card); color: var(--text); border: 1px solid var(--border); padding: 0.4rem; border-radius: 4px; font-size: 0.8rem; outline: none;">
+                            <button class="btn btn-primary" onclick="submitCustomAlert()" style="padding: 0.4rem 1rem; font-size: 0.8rem; border: none; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+                        </div>
+                    </div>
                     <div class="alert-list" id="alert-list-container">
                         <!-- Populated by JavaScript -->
                     </div>
@@ -393,6 +420,49 @@ def index():
         <script>
             let localAlerts = [];
             let activeAlertId = null;
+
+            async function submitCustomAlert() {
+                const type = document.getElementById('custom-type').value;
+                const indicator = document.getElementById('custom-indicator').value.trim();
+                let title = document.getElementById('custom-title').value.trim();
+                
+                if (!indicator) {
+                    alert("Please enter a threat indicator!");
+                    return;
+                }
+                
+                if (!title) {
+                    title = `Manual Threat Analysis: ${type}`;
+                }
+                
+                const alertPayload = {
+                    title: title,
+                    severity: "HIGH",
+                    timestamp: new Date().toISOString(),
+                    indicator: indicator,
+                    indicator_type: type,
+                    details: `Manually submitted indicator for real-time security assessment and triage.`
+                };
+                
+                try {
+                    const response = await fetch('/api/alerts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(alertPayload)
+                    });
+                    
+                    if (response.ok) {
+                        alert("Threat alert submitted successfully! Triggering AI analyst triage...");
+                        document.getElementById('custom-indicator').value = '';
+                        document.getElementById('custom-title').value = '';
+                        fetchAlerts();
+                    } else {
+                        alert("Error submitting threat: " + await response.text());
+                    }
+                } catch (e) {
+                    alert("Network error: " + e.message);
+                }
+            }
 
             async function fetchAlerts() {
                 try {
