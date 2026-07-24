@@ -152,8 +152,8 @@ def start_simulation():
             logger.error(f"Simulation loop error: {str(e)}")
             
         loop_count += 1
-        # Sleep 45 seconds between attacks
-        time.sleep(45)
+        # Sleep 30 minutes between attacks (1800 seconds) to prevent overloading the VM and API limits
+        time.sleep(1800)
 
 if __name__ == "__main__":
     start_simulation()
