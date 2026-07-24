@@ -421,6 +421,23 @@ def index():
                             </div>
                         </div>
                     </div>
+
+                    <!-- Dynamic SOC Status Dashboard -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.01);">
+                        <div style="background: rgba(0, 122, 255, 0.05); border: 1px solid rgba(0, 122, 255, 0.15); padding: 0.5rem; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Total</div>
+                            <div id="kpi-total" style="font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-top: 0.25rem;">0</div>
+                        </div>
+                        <div style="background: rgba(255, 149, 0, 0.05); border: 1px solid rgba(255, 149, 0, 0.15); padding: 0.5rem; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Open</div>
+                            <div id="kpi-open" style="font-size: 1.1rem; font-weight: 800; color: #ff9500; margin-top: 0.25rem;">0</div>
+                        </div>
+                        <div style="background: rgba(52, 199, 89, 0.05); border: 1px solid rgba(52, 199, 89, 0.15); padding: 0.5rem; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Resolved</div>
+                            <div id="kpi-resolved" style="font-size: 1.1rem; font-weight: 800; color: #30d158; margin-top: 0.25rem;">0</div>
+                        </div>
+                    </div>
+
                     <div class="alert-list" id="alert-list-container">
                         <!-- Populated by JavaScript -->
                     </div>
@@ -558,7 +575,14 @@ def index():
                 const container = document.getElementById('alert-list-container');
                 container.innerHTML = '';
                 
+                const totalCount = localAlerts.length;
                 const openCount = localAlerts.filter(a => a.status === 'OPEN').length;
+                const resolvedCount = localAlerts.filter(a => a.status === 'RESOLVED').length;
+                
+                document.getElementById('kpi-total').textContent = totalCount;
+                document.getElementById('kpi-open').textContent = openCount;
+                document.getElementById('kpi-resolved').textContent = resolvedCount;
+                
                 document.getElementById('open-count').textContent = `${openCount} Open`;
 
                 // Sort alerts newest to oldest

@@ -302,6 +302,50 @@
         <div class="card-url">dashboard/index.html <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
       </a>
     </section>
+
+    <!-- Project Showcase / About Section -->
+    <section class="about-section" style="background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;"><i class="fa-solid fa-circle-nodes" style="color: var(--cyan);"></i> Architecture & How It Works</h2>
+      
+      <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.25rem;">
+        <strong>NevesSec</strong> is an autonomous, cloud-native Security Operations Center (SOC) agent built on Google Cloud Platform and powered by <strong>Gemini 2.5 Flash</strong>. It automatically intercepts, triages, and contains threats on live systems.
+      </p>
+
+      <!-- Visual Architecture Flow -->
+      <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+        <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); font-weight: 700;">Real-Time Threat Triage Pipeline</div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.85rem; font-family: 'Fira Code', monospace; text-align: center; line-height: 1.4;">
+          <span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border);">1. Ingestion Feed</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); color: #ff9500;">2. SIEM Console</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(255, 255, 255, 0.05); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border);">3. Webhook Trigger</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(0, 122, 255, 0.15); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(0, 122, 255, 0.3); color: #0a84ff; font-weight: bold;">4. n8n Task Hub</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(48, 213, 200, 0.15); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(48, 213, 200, 0.3); color: var(--cyan); font-weight: bold;">5. Gemini AI Analyst</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(255, 59, 48, 0.15); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(255, 59, 48, 0.3); color: #ff453a;">6. Containment / Blocking</span>
+          <span style="color: var(--cyan); font-weight: bold;">➔</span>
+          <span style="background: rgba(52, 199, 89, 0.15); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(52, 199, 89, 0.3); color: #30d158; font-weight: bold;">7. Resolve Incident</span>
+        </div>
+      </div>
+
+      <!-- Test Guide -->
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--cyan);"><i class="fa-solid fa-play"></i> Interactively Trigger the Live AI Agent</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.25rem;">
+          This entire SOC pipeline is running live in Google Cloud. You can trigger the automated AI analyst right now:
+        </p>
+        <ol style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <li>Open the <strong>Enterprise SIEM Console</strong> card above.</li>
+          <li>Click the <strong>Ad-hoc Audit</strong> tab in the left sidebar.</li>
+          <li>Select <strong>Phishing Email</strong> and paste a suspicious email text (or select <strong>System Logs</strong> and paste some server log snippets).</li>
+          <li>Click the blue <strong>Run AI Audit</strong> button.</li>
+          <li>Go back to the <strong>Incident Alerts Queue</strong> list on the left—you will watch your new alert appear, and within 10-15 seconds, automatically resolve as the AI agent completes its analysis, maps it to MITRE ATT&CK, and closes the incident!</li>
+        </ol>
+      </div>
+    </section>
   </div>
 
   <footer>
