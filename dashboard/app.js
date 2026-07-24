@@ -166,6 +166,7 @@ if (isPlaceholder) {
           owner: template.vt_lookup.owner,
           country: template.vt_lookup.country
         },
+        recommendations: template.playbook,
         playbook: template.playbook
       }
     };
