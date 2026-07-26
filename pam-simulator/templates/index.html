@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NevesSec JIT-Vault | Privileged Access Simulator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Banner -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <i class="fa-solid fa-key-skeleton logo-icon"></i>
+                <div>
+                    <h1>NEVESSEC <span>.JIT-VAULT</span></h1>
+                    <p class="subtitle">Zero-Standing-Privilege Privileged Access Management (PAM) Simulator</p>
+                </div>
+            </div>
+            <div class="live-status">
+                <span class="pulse-dot"></span>
+                <span>PAM Daemon Active</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="app-container">
+        
+        <!-- Left Column: Vault Assets & JIT Requests Form -->
+        <div class="main-column">
+            
+            <!-- Section 1: Vault Console -->
+            <section class="panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-vault"></i> Administrative Vault Console
+                </div>
+                <div class="panel-body">
+                    <div id="assets-grid" class="assets-grid">
+                        <!-- Loaded via JS -->
+                        <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading assets...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: JIT Request Form -->
+            <section class="panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-ticket-simple"></i> Request Just-in-Time (JIT) Access
+                </div>
+                <div class="panel-body">
+                    <form id="jit-form" class="jit-form" onsubmit="submitJITRequest(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="requestor">Requester Username</label>
+                                <input type="text" id="requestor" value="jean.neves" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="target-asset">Target Admin Account</label>
+                                <select id="target-asset" required>
+                                    <option value="" disabled selected>Select an asset...</option>
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="duration">Requested Duration (minutes)</label>
+                                <select id="duration" required>
+                                    <option value="1">1 minute (Test Expiration)</option>
+                                    <option value="5">5 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60">1 hour</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reason">Business Justification / Ticket ID</label>
+                                <input type="text" id="reason" placeholder="e.g. Incident INC-402 database diagnostics" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Access Request</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column: Approval Workbench & Audit Trail -->
+        <div class="main-column">
+            
+            <!-- Section 3: JIT Approvals (Simulates Manager view) -->
+            <section class="panel">
+                <div class="panel-header">
+                    <i class="fa-solid fa-user-shield"></i> JIT Approval Workbench
+                </div>
+                <div class="panel-body">
+                    <div id="approvals-list" class="approvals-list">
+                        <!-- Loaded via JS -->
+                        <div class="no-requests">No pending JIT requests in queue.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Security Audit Trail -->
+            <section class="panel">
+                <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-list-check"></i> Security Audit Trail</span>
+                    <button onclick="clearAuditLogs()" class="btn-clear" title="Clear logs"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="panel-body table-container">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Actor</th>
+                                <th>Action</th>
+                                <th>Target Asset</th>
+                                <th>Event Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-log-body">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>&copy; 2026 NevesSec Security Operations. Powered by FastAPI & SQLite.</p>
+    </footer>
+
+    <!-- Client Script -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
