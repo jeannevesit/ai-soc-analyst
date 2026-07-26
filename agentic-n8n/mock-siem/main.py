@@ -470,7 +470,7 @@ def index():
                             </div>
                             <div style="padding: 1rem; border-top: 1px solid var(--border); background: var(--panel-header); font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
                                 <p style="margin: 0;">
-                                    <strong>What is this?</strong> This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
+                                    This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
                                 </p>
                                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; font-family: 'Fira Code', monospace; font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.5rem; margin-top: 0.25rem; line-height: 1.2;">
                                     <span><strong style="color: #3b82f6;">OAS:</strong> File Detections</span>
@@ -755,7 +755,7 @@ def index():
                         </div>
                         <div style="padding: 1rem; border-top: 1px solid var(--border); background: var(--panel-header); font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
                             <p style="margin: 0;">
-                                <strong>What is this?</strong> This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
+                                This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
                             </p>
                             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; font-family: 'Fira Code', monospace; font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.5rem; margin-top: 0.25rem; line-height: 1.2;">
                                 <span><strong style="color: #3b82f6;">OAS:</strong> File Detections</span>
