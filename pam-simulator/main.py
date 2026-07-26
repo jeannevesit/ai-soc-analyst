@@ -198,7 +198,7 @@ class JITRequestModel(BaseModel):
 # API Endpoints
 @app.get("/", response_class=HTMLResponse)
 def get_dashboard(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html", context={})
 
 @app.get("/api/assets")
 def get_assets():
