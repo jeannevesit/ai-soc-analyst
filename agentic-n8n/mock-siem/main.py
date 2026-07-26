@@ -368,7 +368,7 @@ def index():
             <header>
                 <div class="logo">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <span>ENTERPRISE</span>.SIEM
+                    <span>NEVESSEC</span>.SOAR
                 </div>
                 <div style="display: flex; gap: 1rem; align-items: center;">
                     <button class="btn btn-secondary" onclick="seedDatabase()"><i class="fa-solid fa-arrow-rotate-right"></i> Reset Alert Queue</button>
@@ -454,9 +454,8 @@ def index():
                 </div>
             </div>
 
-            <!-- Recruiter & Architecture Guide -->
+            <!-- Explanations Grid -->
             <div class="panel" style="margin-top: 1rem; padding: 2rem;">
-                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-graduation-cap"></i> Recruiter & Architecture Guide: How NevesSec Works</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; font-size: 0.85rem; line-height: 1.5;">
                     <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
                         <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--warning);"></i> 1. Telemetry Ingestion</h4>
