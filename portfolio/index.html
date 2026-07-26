@@ -150,6 +150,40 @@
             </div>
           </div>
         </div>
+
+        <!-- Pipeline Architecture & How It Works -->
+        <div class="project-architecture" style="margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+          <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--cyan); display: flex; align-items: center; gap: 0.5rem; margin: 0;"><i class="fa-solid fa-circle-nodes"></i> Pipeline Architecture & How It Works</h4>
+          
+          <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); font-weight: 700;">Real-Time Threat Triage Pipeline</div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; font-size: 0.8rem; font-family: var(--font-code); text-align: center; line-height: 1.4;">
+              <span style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">1. Ingestion Feed</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); color: #ff9500;">2. SIEM Console</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(255, 255, 255, 0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);">3. Webhook Trigger</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(0, 122, 255, 0.1); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid rgba(0, 122, 255, 0.2); color: #0a84ff; font-weight: bold;">4. n8n Task Hub</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(48, 213, 200, 0.1); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid rgba(48, 213, 200, 0.2); color: var(--cyan); font-weight: bold;">5. Gemini AI Analyst</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(255, 59, 48, 0.1); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid rgba(255, 59, 48, 0.2); color: #ff453a;">6. Containment / Blocking</span>
+              <span style="color: var(--cyan); font-weight: bold;">➔</span>
+              <span style="background: rgba(52, 199, 89, 0.1); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid rgba(52, 199, 89, 0.2); color: #30d158; font-weight: bold;">7. Resolve Incident</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <h5 style="font-size: 0.95rem; font-weight: 600; color: var(--text); margin: 0;"><i class="fa-solid fa-play" style="color: var(--cyan); font-size: 0.8rem;"></i> Interactively Trigger the Live AI Agent:</h5>
+            <ol style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; margin: 0;">
+              <li>Click <strong>Open Live Portal</strong> above to access your custom SIEM dashboard (<code>soar.jeannevesit.com</code>).</li>
+              <li>Under the <strong>Indicator Triage</strong> tab, select an indicator type (URL, IP Address, or Command), paste a test threat value, and click <strong>Submit</strong>.</li>
+              <li>Alternatively, switch to the <strong>Ad-hoc Audit</strong> tab, select <strong>Phishing Email</strong>, paste a suspicious email draft, and click <strong>Run AI Audit</strong>.</li>
+              <li>Watch the <strong>Incident Alerts Queue</strong> list on the left—the alert will load, invoke the n8n webhook, run the Gemini agent, execute the VirusTotal check, trigger the firewall block, and change to <strong>RESOLVED</strong> automatically in 10-15 seconds!</li>
+            </ol>
+          </div>
+        </div>
       </div>
 
       <!-- Second Project: IAM Automation Toolkit -->
