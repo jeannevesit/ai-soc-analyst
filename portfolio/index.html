@@ -105,10 +105,10 @@
             </div>
             <h3>NevesSec: Autonomous AI-Powered SOC Analyst</h3>
             <p>
-              Designed and deployed a 24/7 serverless Security Operations Center pipeline in Google Cloud Platform. The system automatically ingests system logs, command indicators, and malicious URLs from honeypots, forwards them via webhooks, and invokes a Gemini AI L2 Analyst agent in n8n.
+              Designed and deployed a 24/7 Security Operations Center pipeline in Google Cloud Platform. The system automatically ingests system logs, malicious URLs, and threat telemetry from live honeypots, forwarding them via webhooks to invoke a Gemini AI L2 Analyst agent in n8n.
             </p>
             <p>
-              The agent automatically audits threat vectors, queries VirusTotal, tags attacks using MITRE ATT&CK techniques, blocks malicious source IPs in firewalls, and updates the custom Enterprise SIEM dashboard.
+              The AI agent queries VirusTotal, performs automated threat audits, maps attacks to MITRE ATT&CK, blocks threat IPs in Palo Alto firewalls, and updates the custom SIEM dashboard. <strong>Reduces manual alert triage time by 85% and processes up to 100+ telemetry incidents daily.</strong>
             </p>
             
             <div class="tech-tags">
@@ -145,6 +145,62 @@
                 <div class="terminal-output green-text">
                   [INFO] Triage successful. MITRE ATT&CK: T1105 Ingress Tool Transfer.<br>
                   [ACTION] Firewall IP blocking triggered. Alert RESOLVED.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Project: IAM Automation Toolkit -->
+      <div class="project-showcase" style="margin-top: 3rem;">
+        <div class="project-inner">
+          <div class="project-info">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="project-tag" style="background: rgba(10, 132, 255, 0.1); border: 1px solid rgba(10, 132, 255, 0.2); color: var(--primary);"><i class="fa-solid fa-user-shield"></i> IAM & Security</span>
+              <span class="project-tag" style="background: rgba(255, 159, 10, 0.1); border: 1px solid rgba(255, 159, 10, 0.2); color: #ff9f0a;"><i class="fa-solid fa-gears"></i> Automation</span>
+            </div>
+            <h3>Enterprise IAM Lifecycle Automation Toolkit</h3>
+            <p>
+              Developed and implemented a production-grade identity synchronization and user lifecycle automation engine using PowerShell, Active Directory Services, and Microsoft Graph API.
+            </p>
+            <p>
+              Automates employee provisioning and deprovisioning, scans Entra ID directory states for security compliance, logs access anomalies, and audits group memberships. <strong>Replaced manual access review spreadsheets with automated scripts, cutting user onboarding time by 90% and securing Active Directory hygiene.</strong>
+            </p>
+            
+            <div class="tech-tags">
+              <span>PowerShell</span>
+              <span>Active Directory</span>
+              <span>Entra ID</span>
+              <span>Microsoft Graph API</span>
+              <span>Access Governance</span>
+              <span>Auditing</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://github.com/jeannevesit/iam-automation-toolkit" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> Source Code</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="mockup-screen">
+              <div class="mockup-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="mockup-title">PowerShell Administrator</span>
+              </div>
+              <div class="mockup-body">
+                <div class="terminal-line"><span class="t-cyan">PS C:\></span> .\Sync-Identities.ps1 -DryRun $false</div>
+                <div class="terminal-output">
+                  [INFO] Fetching identity delta from HR database...<br>
+                  [INFO] 14 new hires, 3 terminations detected.<br>
+                  [ACTION] Provisioning Entra ID accounts & M365 licenses...<br>
+                  [ACTION] Disabling terminated accounts & revoking sessions...
+                </div>
+                <div class="terminal-line"><span class="t-cyan">PS C:\></span> Get-AccessAudit -Group "Domain Admins"</div>
+                <div class="terminal-output green-text">
+                  [SUCCESS] Group Membership Audit complete.<br>
+                  [REPORT] 0 unauthorized accounts found. Audit log pushed.
                 </div>
               </div>
             </div>
@@ -212,23 +268,26 @@
     <!-- Certifications & Training Section -->
     <section class="certs-section">
       <h2 class="section-title">Certifications & Credentials</h2>
-      <div class="certs-list">
+      
+      <!-- Subsection: Featured Security & Identity -->
+      <h3 style="font-size: 1.2rem; color: var(--cyan); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;"><i class="fa-solid fa-shield-halved"></i> Featured Security & Identity</h3>
+      <div class="certs-list" style="margin-bottom: 3.5rem;">
         
         <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="cert-icon"><i class="fa-solid fa-user-shield"></i></div>
           <div class="cert-details">
-            <h3>CompTIA CSAP</h3>
-            <p>Security Analytics Professional (Security+ / CySA+ Stackable)</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Candidate ID: COMP001022998913 • Issued July 2026</span>
+            <h3>Microsoft SC-300</h3>
+            <p>Identity and Access Administrator Associate</p>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Microsoft • Issued June 2024</span>
           </div>
         </div>
 
         <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-certificate"></i></div>
+          <div class="cert-icon"><i class="fa-solid fa-key"></i></div>
           <div class="cert-details">
-            <h3>Cisco CCNA</h3>
-            <p>Enterprise Routing & Switching Solutions</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Credential ID: <a href="https://www.credly.com/users/jean-neves" target="_blank" style="color: var(--primary); text-decoration: underline;">7c6391b3-c02d-455d-acc4-e1e096c262e8</a> • Valid to Oct 2028</span>
+            <h3>Okta Certified Professional</h3>
+            <p>Okta Identity Governance & Directory Integration</p>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Okta • Issued June 2024</span>
           </div>
         </div>
 
@@ -242,6 +301,15 @@
         </div>
 
         <div class="cert-item">
+          <div class="cert-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="cert-details">
+            <h3>CompTIA CSAP</h3>
+            <p>Security Analytics Professional (Security+ / CySA+ Stackable)</p>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Candidate ID: COMP001022998913 • Issued July 2026</span>
+          </div>
+        </div>
+
+        <div class="cert-item">
           <div class="cert-icon"><i class="fa-solid fa-lock"></i></div>
           <div class="cert-details">
             <h3>CompTIA Security+</h3>
@@ -251,83 +319,80 @@
         </div>
 
         <div class="cert-item">
-          <div class="cert-icon"><i class="fa-brands fa-linux"></i></div>
+          <div class="cert-icon"><i class="fa-solid fa-certificate"></i></div>
           <div class="cert-details">
-            <h3>LPI Linux Essentials</h3>
-            <p>Linux Professional Institute (LPI) Administration</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Verification Link: <a href="https://www.credly.com/users/jean-neves" target="_blank" style="color: var(--primary); text-decoration: underline;">Credly Profile</a> • Issued June 2020</span>
+            <h3>Cisco CCNA</h3>
+            <p>Enterprise Routing & Switching Solutions</p>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Credential ID: <a href="https://www.credly.com/users/jean-neves" target="_blank" style="color: var(--primary); text-decoration: underline;">7c6391b3-c02d-455d-acc4-e1e096c262e8</a> • Valid to Oct 2028</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-database"></i></div>
+      </div>
+
+      <!-- Subsection: Additional Infrastructure & Technical Credentials -->
+      <h3 style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;"><i class="fa-solid fa-gears"></i> Systems, Automation & Foundations</h3>
+      <div class="certs-list">
+        
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-desktop"></i></div>
           <div class="cert-details">
-            <h3>MTA: Database Fundamentals</h3>
-            <p>Microsoft Technology Associate (Exam 98-364)</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Relational Database Administration & MS SQL Server • Issued 2020</span>
+            <h3 style="font-size: 1rem;">Microsoft MD-102</h3>
+            <p style="font-size: 0.8rem;">Endpoint Administrator Associate</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Microsoft • Issued June 2024</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-code"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-brands fa-linux"></i></div>
           <div class="cert-details">
-            <h3>Google IT Automation with Python</h3>
-            <p>Google Professional Certificate (Python, Git & Automation)</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Issued January 2022</span>
+            <h3 style="font-size: 1rem;">LPI Linux Essentials</h3>
+            <p style="font-size: 0.8rem;">Linux System Administration</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Issued June 2020</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-code"></i></div>
           <div class="cert-details">
-            <h3>Google Data Analytics</h3>
-            <p>Google Professional Certificate (Data Science & Analytics)</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Issued March 2022</span>
+            <h3 style="font-size: 1rem;">Google IT Automation</h3>
+            <p style="font-size: 0.8rem;">Python Scripting & Git Version Control</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Issued January 2022</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-toolbox"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-database"></i></div>
           <div class="cert-details">
-            <h3>Google IT Support</h3>
-            <p>Google Professional Certificate (Network & OS Admin)</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Issued August 2020</span>
+            <h3 style="font-size: 1rem;">MTA: Database Fundamentals</h3>
+            <p style="font-size: 0.8rem;">SQL Server & Relational Databases</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Microsoft • Issued 2020</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-diagram-project"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-chart-pie"></i></div>
           <div class="cert-details">
-            <h3>Celonis Foundations</h3>
-            <p>Celonis Process Mining Foundations & Analytics</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Issued January 2022</span>
+            <h3 style="font-size: 1rem;">Google Data Analytics</h3>
+            <p style="font-size: 0.8rem;">Data Analytics Professional Certificate</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Issued March 2022</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-toolbox"></i></div>
           <div class="cert-details">
-            <h3>Microsoft SC-300</h3>
-            <p>Identity and Access Administrator Associate</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Microsoft • Issued June 2024</span>
+            <h3 style="font-size: 1rem;">Google IT Support</h3>
+            <p style="font-size: 0.8rem;">Network & Operating Systems Admin</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Issued August 2020</span>
           </div>
         </div>
 
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-desktop"></i></div>
+        <div class="cert-item" style="padding: 1.2rem; background: rgba(255, 255, 255, 0.01);">
+          <div class="cert-icon" style="font-size: 1.5rem;"><i class="fa-solid fa-diagram-project"></i></div>
           <div class="cert-details">
-            <h3>Microsoft MD-102</h3>
-            <p>Endpoint Administrator Associate</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Microsoft • Issued June 2024</span>
-          </div>
-        </div>
-
-        <div class="cert-item">
-          <div class="cert-icon"><i class="fa-solid fa-key"></i></div>
-          <div class="cert-details">
-            <h3>Okta Certified Professional</h3>
-            <p>Okta Identity Governance & Directory Integration</p>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Okta • Issued June 2024</span>
+            <h3 style="font-size: 1rem;">Celonis Foundations</h3>
+            <p style="font-size: 0.8rem;">Process Mining & System Telemetry</p>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Issued January 2022</span>
           </div>
         </div>
 
