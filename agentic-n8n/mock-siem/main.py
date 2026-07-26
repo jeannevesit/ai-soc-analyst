@@ -276,6 +276,18 @@ def index():
             @media (max-width: 768px) {
                 .console-grid { grid-template-columns: 1fr; }
             }
+            @media (max-width: 600px) {
+                body { padding: 1rem; }
+                header {
+                    flex-direction: column;
+                    gap: 1rem;
+                    align-items: stretch;
+                    text-align: center;
+                }
+                header div {
+                    justify-content: center;
+                }
+            }
             .panel {
                 background: var(--panel);
                 border: 1px solid var(--border);
@@ -333,10 +345,9 @@ def index():
             .alert-indicator { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--primary); }
             
             .alert-details {
-                padding: 1.5rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1.5rem;
+                min-height: 500px;
             }
             .detail-section h4 {
                 font-size: 0.8rem;
@@ -447,9 +458,15 @@ def index():
                 <div class="panel">
                     <div class="panel-header">Investigation Workbench</div>
                     <div id="details-workbench" class="alert-details">
-                        <div style="text-align: center; padding: 4rem 0; color: var(--text-muted);">
-                            <i class="fa-solid fa-search" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                            <p>Select an alert from the queue to start investigating</p>
+                        <div id="empty-state-workbench" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                            <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; background: var(--panel-header);">
+                                <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
+                                <span>Global Cyber Threat Intelligence (Real-Time WebGL feed)</span>
+                            </div>
+                            <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 400px;">
+                                <iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" loading="lazy"></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -648,6 +665,8 @@ def index():
 
                 if (activeAlertId) {
                     renderActiveAlert();
+                } else {
+                    renderEmptyState();
                 }
             }
 
@@ -673,27 +692,44 @@ def index():
                 } catch(e) {}
 
                 workbench.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
-                        <div>
-                            <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">${alert.title}</h2>
-                            <div style="font-size: 0.75rem; color: var(--text-muted);">Timestamp: ${detailsTime}</div>
+                    <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                            <div>
+                                <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">${alert.title}</h2>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Timestamp: ${detailsTime}</div>
+                            </div>
+                            <span class="badge ${statusClass}">${alert.status}</span>
                         </div>
-                        <span class="badge ${statusClass}">${alert.status}</span>
-                    </div>
 
-                    <div class="detail-section">
-                        <h4>Security Context</h4>
-                        <div class="detail-content">${alert.details}</div>
-                    </div>
+                        <div class="detail-section">
+                            <h4>Security Context</h4>
+                            <div class="detail-content">${alert.details}</div>
+                        </div>
 
-                    <div class="detail-section">
-                        <h4>Threat Indicator (${alert.indicator_type})</h4>
-                        <div class="detail-content code">${alert.indicator}</div>
-                    </div>
+                        <div class="detail-section">
+                            <h4>Threat Indicator (${alert.indicator_type})</h4>
+                            <div class="detail-content code">${alert.indicator}</div>
+                        </div>
 
-                    <div class="detail-section">
-                        <h4>AI Analyst Resolution Verdict</h4>
-                        <div class="detail-content ai-notes">${alert.resolution_notes || 'Pending analysis. Run the AI agent to triage.'}</div>
+                        <div class="detail-section">
+                            <h4>AI Analyst Resolution Verdict</h4>
+                            <div class="detail-content ai-notes">${alert.resolution_notes || 'Pending analysis. Run the AI agent to triage.'}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderEmptyState() {
+                const workbench = document.getElementById('details-workbench');
+                workbench.innerHTML = `
+                    <div id="empty-state-workbench" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; background: var(--panel-header);">
+                            <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
+                            <span>Global Cyber Threat Intelligence (Real-Time WebGL feed)</span>
+                        </div>
+                        <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 400px;">
+                            <iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" loading="lazy"></iframe>
+                        </div>
                     </div>
                 `;
             }
