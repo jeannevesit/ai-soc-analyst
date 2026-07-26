@@ -720,6 +720,9 @@ def index():
             }
 
             function renderEmptyState() {
+                if (document.getElementById('empty-state-workbench')) {
+                    return; // Map is already loaded, do not refresh it!
+                }
                 const workbench = document.getElementById('details-workbench');
                 workbench.innerHTML = `
                     <div id="empty-state-workbench" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
