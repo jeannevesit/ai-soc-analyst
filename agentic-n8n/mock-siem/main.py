@@ -450,7 +450,31 @@ def index():
                         <div style="text-align: center; padding: 4rem 0; color: var(--text-muted);">
                             <i class="fa-solid fa-search" style="font-size: 3rem; margin-bottom: 1rem;"></i>
                             <p>Select an alert from the queue to start investigating</p>
-                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recruiter & Architecture Guide -->
+            <div class="panel" style="margin-top: 1rem; padding: 2rem;">
+                <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-graduation-cap"></i> Recruiter & Architecture Guide: How NevesSec Works</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; font-size: 0.85rem; line-height: 1.5;">
+                    <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--warning);"></i> 1. Telemetry Ingestion</h4>
+                        <p style="color: var(--text-muted);">
+                            <strong>Where do threats come from?</strong> In a corporate environment, real-world honeypots, firewall system logs, and security agents scan for active attacks. When a threat indicator (like a rogue IP scanning SSH ports, or an executive clicking a phishing URL) is flagged, the system logs the incident here in the SIEM queue as <strong>OPEN</strong>.
+                        </p>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-robot" style="color: var(--primary);"></i> 2. Autonomous AI Webhook</h4>
+                        <p style="color: var(--text-muted);">
+                            <strong>Why does it need automation?</strong> Enterprise security operations teams are overwhelmed by thousands of logs daily. To prevent fatigue, the SIEM triggers a webhook to n8n, invoking a <strong>L2 Gemini AI Agent</strong>. The agent inspects reputational threat scores on VirusTotal, maps techniques to MITRE ATT&CK, and audits shell scripts.
+                        </p>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-shield-halved" style="color: var(--success);"></i> 3. Containment & Resolution</h4>
+                        <p style="color: var(--text-muted);">
+                            <strong>How does it help a company?</strong> Instead of waiting hours for a human analyst to review, if the AI agent confirms a critical threat, it instantly calls the network firewall to block the attacking IP, containment takes seconds. The AI then updates the SIEM status to <strong>RESOLVED</strong> and saves its technical notes.
+                        </p>
                     </div>
                 </div>
             </div>
