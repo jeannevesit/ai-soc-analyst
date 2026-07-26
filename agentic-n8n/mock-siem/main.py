@@ -459,12 +459,30 @@ def index():
                     <div class="panel-header">Investigation Workbench</div>
                     <div id="details-workbench" class="alert-details">
                         <div id="empty-state-workbench" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                            <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; background: var(--panel-header);">
-                                <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
-                                <span>Global Cyber Threat Intelligence (Real-Time WebGL feed)</span>
+                            <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; background: var(--panel-header);">
+                                <a href="https://cybermap.kaspersky.com/" target="_blank" style="color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
+                                    <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
+                                    <span>Global Cyber Threat Intelligence (Real-Time WebGL feed) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--text-muted); margin-left: 0.25rem;"></i></span>
+                                </a>
                             </div>
-                            <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 400px;">
+                            <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 380px;">
                                 <iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" loading="lazy"></iframe>
+                            </div>
+                            <div style="padding: 1rem; border-top: 1px solid var(--border); background: var(--panel-header); font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <p style="margin: 0;">
+                                    <strong>What is this?</strong> This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
+                                </p>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; font-family: 'Fira Code', monospace; font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.5rem; margin-top: 0.25rem; line-height: 1.2;">
+                                    <span><strong style="color: #3b82f6;">OAS:</strong> File Detections</span>
+                                    <span>•</span>
+                                    <span><strong style="color: #f59e0b;">ODS:</strong> Scheduled Scans</span>
+                                    <span>•</span>
+                                    <span><strong style="color: #10b981;">MAV:</strong> Mail/Phishing</span>
+                                    <span>•</span>
+                                    <span><strong style="color: #30d5c8;">WAV:</strong> Web Attacks</span>
+                                    <span>•</span>
+                                    <span><strong style="color: #ef4444;">IDS:</strong> Network Exploits</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -726,12 +744,30 @@ def index():
                 const workbench = document.getElementById('details-workbench');
                 workbench.innerHTML = `
                     <div id="empty-state-workbench" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-                        <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; background: var(--panel-header);">
-                            <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
-                            <span>Global Cyber Threat Intelligence (Real-Time WebGL feed)</span>
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; background: var(--panel-header);">
+                            <a href="https://cybermap.kaspersky.com/" target="_blank" style="color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
+                                <i class="fa-solid fa-globe" style="color: var(--cyan); animation: pulse 2s infinite;"></i>
+                                <span>Global Cyber Threat Intelligence (Real-Time WebGL feed) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--text-muted); margin-left: 0.25rem;"></i></span>
+                            </a>
                         </div>
-                        <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 400px;">
+                        <div style="flex: 1; position: relative; overflow: hidden; background: #050a12; min-height: 380px;">
                             <iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" loading="lazy"></iframe>
+                        </div>
+                        <div style="padding: 1rem; border-top: 1px solid var(--border); background: var(--panel-header); font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <p style="margin: 0;">
+                                <strong>What is this?</strong> This interactive WebGL globe tracks actual cyberattacks blocked worldwide in real time. Each colored arc represents a live malware detection or network exploit vector.
+                            </p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; font-family: 'Fira Code', monospace; font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.5rem; margin-top: 0.25rem; line-height: 1.2;">
+                                <span><strong style="color: #3b82f6;">OAS:</strong> File Detections</span>
+                                <span>•</span>
+                                <span><strong style="color: #f59e0b;">ODS:</strong> Scheduled Scans</span>
+                                <span>•</span>
+                                <span><strong style="color: #10b981;">MAV:</strong> Mail/Phishing</span>
+                                <span>•</span>
+                                <span><strong style="color: #30d5c8;">WAV:</strong> Web Attacks</span>
+                                <span>•</span>
+                                <span><strong style="color: #ef4444;">IDS:</strong> Network Exploits</span>
+                            </div>
                         </div>
                     </div>
                 `;
