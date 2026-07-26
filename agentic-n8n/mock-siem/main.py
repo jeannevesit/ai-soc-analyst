@@ -477,19 +477,19 @@ def index():
                     <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
                         <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--warning);"></i> 1. Telemetry Ingestion</h4>
                         <p style="color: var(--text-muted);">
-                            <strong>Where do threats come from?</strong> In a corporate environment, real-world honeypots, firewall system logs, and security agents scan for active attacks. When a threat indicator (like a rogue IP scanning SSH ports, or an executive clicking a phishing URL) is flagged, the system logs the incident here in the SIEM queue as <strong>OPEN</strong>.
+                            <strong>Where do threats come from?</strong> Honeypots, firewall logs, and security agents continuously monitor for active attacks across the environment. When one flags a threat indicator — a rogue IP scanning SSH ports, an executive clicking a phishing link — the incident lands in the SIEM queue with status OPEN.
                         </p>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
                         <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-robot" style="color: var(--primary);"></i> 2. Autonomous AI Webhook</h4>
                         <p style="color: var(--text-muted);">
-                            <strong>Why does it need automation?</strong> Enterprise security operations teams are overwhelmed by thousands of logs daily. To prevent fatigue, the SIEM triggers a webhook to n8n, invoking a <strong>L2 Gemini AI Agent</strong>. The agent inspects reputational threat scores on VirusTotal, maps techniques to MITRE ATT&CK, and audits shell scripts.
+                            <strong>Why does it need automation?</strong> Security teams triage thousands of alerts a day, and manual review doesn't scale. The moment an alert hits the queue, the SIEM fires a webhook to n8n, invoking an L2 AI Agent (Gemini). The agent checks reputational scores on VirusTotal, maps the technique to MITRE ATT&CK, and audits any related shell scripts.
                         </p>
                     </div>
                     <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; display: flex; flex-direction: column; gap: 0.5rem;">
                         <h4 style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-shield-halved" style="color: var(--success);"></i> 3. Containment & Resolution</h4>
                         <p style="color: var(--text-muted);">
-                            <strong>How does it help a company?</strong> Instead of waiting hours for a human analyst to review, if the AI agent confirms a critical threat, it instantly calls the network firewall to block the attacking IP, containment takes seconds. The AI then updates the SIEM status to <strong>RESOLVED</strong> and saves its technical notes.
+                            <strong>How does it help a company?</strong> Instead of a human analyst spending hours on review, the agent acts immediately: if it confirms a critical threat, it calls the firewall API to block the attacking IP — containment in seconds, not hours. It then updates the SIEM status to RESOLVED and logs its technical notes.
                         </p>
                     </div>
                 </div>
