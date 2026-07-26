@@ -215,33 +215,35 @@
         </div>
       </div>
 
-      <!-- Second Project: IAM Automation Toolkit -->
+      <!-- Second Project: NevesSec PAM Simulator -->
       <div class="project-showcase" style="margin-top: 3rem;">
         <div class="project-inner">
           <div class="project-info">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <span class="project-tag" style="background: rgba(10, 132, 255, 0.1); border: 1px solid rgba(10, 132, 255, 0.2); color: var(--primary);"><i class="fa-solid fa-user-shield"></i> IAM & Security</span>
-              <span class="project-tag" style="background: rgba(255, 159, 10, 0.1); border: 1px solid rgba(255, 159, 10, 0.2); color: #ff9f0a;"><i class="fa-solid fa-gears"></i> Automation</span>
+              <span class="project-tag"><i class="fa-solid fa-user-shield"></i> Live PAM Project</span>
+              <span class="project-tag live-status" style="background: rgba(48, 209, 88, 0.1); border: 1px solid rgba(48, 209, 88, 0.2); color: var(--success);"><span class="pulse-dot"></span> GCP Cloud Active</span>
             </div>
-            <h3>Enterprise IAM Lifecycle Automation Toolkit</h3>
+            <h3>NevesSec PAM: Privileged Access Simulator</h3>
             <p>
-              Developed and implemented a production-grade identity synchronization and user lifecycle automation engine using PowerShell, Active Directory Services, and Microsoft Graph API.
+              Developed and deployed an interactive, zero-standing-privileges (ZSP) access broker and secure credential vault mimicking production PAM operations (CyberArk / Senha Segura).
             </p>
             <p>
-              Automates employee provisioning and deprovisioning, scans Entra ID directory states for security compliance, logs access anomalies, and audits group memberships. <strong>Replaced manual access review spreadsheets with automated scripts, cutting user onboarding time by 90% and securing Active Directory hygiene.</strong>
+              Implements **AES-256 Fernet encryption** to secure admin passwords at rest, a time-boxed check-out/check-in engine, and a JIT access elevation request workflow with admin approval gating. A background daemon automatically revokes sessions, triggers password auto-rotations on expiry, and maintains a cryptographically separated audit trail.
             </p>
             
             <div class="tech-tags">
-              <span>PowerShell</span>
-              <span>Active Directory</span>
-              <span>Entra ID</span>
-              <span>Microsoft Graph API</span>
-              <span>Access Governance</span>
-              <span>Auditing</span>
+              <span>Python</span>
+              <span>FastAPI</span>
+              <span>SQLite</span>
+              <span>Cryptography (Fernet)</span>
+              <span>Docker</span>
+              <span>JIT Access</span>
+              <span>Security Auditing</span>
             </div>
 
             <div class="project-actions">
-              <a href="https://github.com/jeannevesit/iam-automation-toolkit" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> Source Code</a>
+              <a href="https://pam.jeannevesit.com" target="_blank" class="btn btn-primary"><i class="fa-solid fa-up-right-from-square"></i> Open Live Portal</a>
+              <a href="https://github.com/jeannevesit/ai-soc-analyst/tree/main/pam-simulator" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> Source Code</a>
             </div>
           </div>
           <div class="project-visual">
@@ -250,20 +252,18 @@
                 <span class="dot red"></span>
                 <span class="dot yellow"></span>
                 <span class="dot green"></span>
-                <span class="mockup-title">PowerShell Administrator</span>
+                <span class="mockup-title">NevesSec PAM Engine</span>
               </div>
               <div class="mockup-body">
-                <div class="terminal-line"><span class="t-cyan">PS C:\></span> .\Sync-Identities.ps1 -DryRun $false</div>
+                <div class="terminal-line"><span class="t-cyan">pam-daemon:~$</span> tail -f data/vault.audit</div>
                 <div class="terminal-output">
-                  [INFO] Fetching identity delta from HR database...<br>
-                  [INFO] 14 new hires, 3 terminations detected.<br>
-                  [ACTION] Provisioning Entra ID accounts & M365 licenses...<br>
-                  [ACTION] Disabling terminated accounts & revoking sessions...
+                  [19:02:14] [JIT_REQUEST] User jean.neves requested JIT access to Windows DC Admin (30m).<br>
+                  [19:02:45] [APPROVAL] Admin approved JIT Request #402. Session active.<br>
+                  [19:02:45] [DECRYPT] Temp password revealed for AD_ADMIN.
                 </div>
-                <div class="terminal-line"><span class="t-cyan">PS C:\></span> Get-AccessAudit -Group "Domain Admins"</div>
                 <div class="terminal-output green-text">
-                  [SUCCESS] Group Membership Audit complete.<br>
-                  [REPORT] 0 unauthorized accounts found. Audit log pushed.
+                  [19:32:45] [EXPIRED] JIT session expired. Revoking token.<br>
+                  [19:32:45] [ROTATION] Password auto-rotated. AES vault updated. Secure.
                 </div>
               </div>
             </div>
