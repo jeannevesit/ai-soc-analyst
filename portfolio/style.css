@@ -692,4 +692,109 @@ footer {
     text-align: center;
     justify-content: center;
   }
+  .timeline {
+    padding-left: 1.25rem;
+  }
+  .timeline-marker {
+    left: -1.62rem;
+    width: 10px;
+    height: 10px;
+  }
+  .timeline-content h3 {
+    font-size: 1.1rem;
+  }
+  .timeline-content .company {
+    font-size: 0.88rem;
+  }
+}
+
+/* Floating Navigation Bar Styles */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(9, 11, 17, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #fff;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: var(--transition);
+}
+
+.nav-logo:hover {
+  opacity: 0.8;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.25rem;
+  width: 0%;
+  height: 2px;
+  background: var(--cyan);
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Offset standard sections for top floating nav-bar */
+section {
+  scroll-margin-top: 6rem;
+}
+
+@media (max-width: 600px) {
+  .nav-container {
+    padding: 0.88rem 1rem;
+  }
+  .nav-links {
+    gap: 0.88rem;
+  }
+  .nav-links a {
+    font-size: 0.78rem;
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+  }
 }

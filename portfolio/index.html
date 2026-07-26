@@ -3,13 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jean Neves | Cybersecurity & Infrastructure Professional</title>
+  <title>Jean Neves | IAM & Cybersecurity Engineer</title>
+  <meta name="description" content="Portfolio of Jean Neves, an IT Analyst / Team Lead specializing in Identity & Access Management (IAM), Active Directory, Entra ID, and cloud security automation.">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jeannevesit.com/">
+  <meta property="og:title" content="Jean Neves | IAM & Cybersecurity Engineer">
+  <meta property="og:description" content="IT Analyst / Team Lead and M.S. Cybersecurity student at NYU Tandon. Check out my live autonomous cloud SOC project.">
+  <meta property="og:image" content="https://jeannevesit.com/avatar.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jeannevesit.com/">
+  <meta property="twitter:title" content="Jean Neves | IAM & Cybersecurity Engineer">
+  <meta property="twitter:description" content="IT Analyst / Team Lead and M.S. Cybersecurity student at NYU Tandon. Check out my live autonomous cloud SOC project.">
+  <meta property="twitter:image" content="https://jeannevesit.com/avatar.jpg">
+
   <link rel="stylesheet" href="style.css">
   <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Floating Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">JN</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#credentials">Credentials</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Header Section -->
   <header class="hero-section">
@@ -22,9 +52,9 @@
       </div>
       
       <div class="social-links">
-        <a href="https://github.com/jeannevesit" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/jeannevesit/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="mailto:jr7020@nyu.edu" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://github.com/jeannevesit" target="_blank" title="GitHub" aria-label="Visit Jean's GitHub Profile"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/jeannevesit/" target="_blank" title="LinkedIn" aria-label="Visit Jean's LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="mailto:jr7020@nyu.edu" title="Email" aria-label="Send Email to Jean"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -37,7 +67,7 @@
   <main class="main-container">
 
     <!-- About Me Section -->
-    <section class="about-section scroll-anchor">
+    <section id="about" class="about-section scroll-anchor">
       <div class="inner-grid">
         <div class="profile-area">
           <div class="profile-image-container">
@@ -66,7 +96,7 @@
     </section>
 
     <!-- Skills Grid Section -->
-    <section class="skills-section">
+    <section id="skills" class="skills-section">
       <h2 class="section-title text-center">Core Expertise</h2>
       <div class="skills-grid">
         <div class="skill-card">
@@ -93,7 +123,7 @@
     </section>
 
     <!-- Selected Projects Section -->
-    <section class="projects-section">
+    <section id="projects" class="projects-section">
       <h2 class="section-title">Featured Security Projects</h2>
       <div class="project-showcase">
         <div class="project-inner">
@@ -243,7 +273,7 @@
     </section>
 
     <!-- Professional Experience Section -->
-    <section class="experience-section">
+    <section id="experience" class="experience-section">
       <h2 class="section-title">Professional Experience</h2>
       <div class="timeline">
         
@@ -299,7 +329,7 @@
     </section>
 
     <!-- Certifications & Training Section -->
-    <section class="certs-section">
+    <section id="credentials" class="certs-section">
       <h2 class="section-title">Certifications & Credentials</h2>
       
       <!-- Subsection: Featured Security & Identity -->
