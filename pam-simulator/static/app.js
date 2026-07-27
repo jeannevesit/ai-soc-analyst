@@ -229,11 +229,11 @@ function renderAuditLogs() {
         const date = new Date(log.timestamp).toLocaleString();
         
         row.innerHTML = `
-            <td style="font-family: var(--font-code); color: var(--cyan);">${date}</td>
-            <td><strong>${log.username}</strong></td>
-            <td><span class="event-badge ${log.event_type.toLowerCase()}">${log.event_type}</span></td>
-            <td style="color: #fff;">${log.asset_name}</td>
-            <td style="color: var(--text-muted);">${log.details}</td>
+            <td class="col-time" style="font-family: var(--font-code); color: var(--cyan);">${date}</td>
+            <td class="col-actor"><strong>${log.username}</strong></td>
+            <td class="col-action"><span class="event-badge ${log.event_type.toLowerCase()}">${log.event_type}</span></td>
+            <td class="col-target" style="color: #fff;">${log.asset_name}</td>
+            <td class="col-details" style="color: var(--text-muted);">${log.details}</td>
         `;
         tbody.appendChild(row);
     });
