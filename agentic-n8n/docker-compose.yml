@@ -91,6 +91,19 @@ services:
     networks:
       - soc-network
 
+  job-hunter:
+    build:
+      context: ../job-hunter
+      dockerfile: Dockerfile
+    container_name: job-hunter
+    restart: unless-stopped
+    ports:
+      - "8095:8095"
+    volumes:
+      - ../job-hunter:/app
+    networks:
+      - soc-network
+
 volumes:
   n8n_data:
 
