@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NevesSec ERCO | Endpoint Response & Compliance Orchestrator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Banner -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <i class="fa-solid fa-laptop-medical logo-icon"></i>
+                <div>
+                    <h1>NEVESSEC <span>.ERCO</span></h1>
+                    <p class="subtitle">Endpoint Response & Compliance Orchestrator (EDR & MDM Gateway)</p>
+                </div>
+            </div>
+            <div class="live-status">
+                <span class="pulse-dot"></span>
+                <span>Active Protection</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main class="app-container">
+        
+        <!-- LEFT HALF: IT SOC Command Center -->
+        <div class="admin-pane">
+            
+            <!-- Section 1: Device Registry -->
+            <section class="panel">
+                <div class="panel-header">
+                    <span><i class="fa-solid fa-network-wired"></i> Managed Endpoint Registry</span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Device Name</th>
+                                    <th>OS</th>
+                                    <th>User / Owner</th>
+                                    <th>IP Address</th>
+                                    <th>Compliance Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="device-table-body">
+                                <!-- Loaded via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grid Layout for Simulation & Alerts -->
+            <div class="split-row">
+                
+                <!-- Section 2: Threat Simulator -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <span><i class="fa-solid fa-bug-slash"></i> Threat & Compliance Simulator</span>
+                    </div>
+                    <div class="panel-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                            Simulate incoming EDR/Wazuh alerts to test automated MDM network quarantine and G-Suite SSO suspension.
+                        </p>
+                        
+                        <div class="form-group">
+                            <label for="sim-device">Target Endpoint:</label>
+                            <select id="sim-device" class="form-control">
+                                <!-- Loaded via JS -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sim-threat">Threat Vector:</label>
+                            <select id="sim-threat" class="form-control">
+                                <option value="malware">CobaltStrike Beacon Executed (CRITICAL)</option>
+                                <option value="credential_dump">LSASS Credential Dump Read (HIGH)</option>
+                                <option value="compliance_drift">FileVault/BitLocker Disabled (MEDIUM)</option>
+                            </select>
+                        </div>
+                        
+                        <button onclick="triggerSimulation()" class="btn btn-danger btn-block" style="margin-top: 1rem;">
+                            <i class="fa-solid fa-play"></i> Inject Threat Alert Webhook
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Section 3: EDR Alerts Queue -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <span><i class="fa-solid fa-bell"></i> EDR Incident Queue</span>
+                    </div>
+                    <div class="panel-body list-container" id="incidents-list">
+                        <!-- Loaded via JS -->
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Section 4: Automated Orchestration Logs -->
+            <section class="panel">
+                <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span><i class="fa-solid fa-robot"></i> SOAR Orchestration Timeline (Audit Trail)</span>
+                    <button onclick="resetDemo()" class="btn-clear" title="Reset Demo"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+                <div class="panel-body table-container">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th class="col-time">Timestamp</th>
+                                <th class="col-target">Target</th>
+                                <th class="col-action">Orchestrated Action</th>
+                                <th class="col-details">Action Details & API Log</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-log-body">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- RIGHT HALF: Employee Mobile Experience Simulator -->
+        <div class="mobile-pane">
+            <div class="mobile-controls">
+                <label for="mobile-device-view"><i class="fa-solid fa-mobile-screen"></i> Viewing Phone for User:</label>
+                <select id="mobile-device-view" onchange="switchMobileView()" class="form-control compact">
+                    <!-- Loaded via JS -->
+                </select>
+            </div>
+
+            <!-- Sleek Phone Mockup -->
+            <div class="phone-mockup">
+                <div class="phone-speaker"></div>
+                <div class="phone-screen" id="phone-screen-content">
+                    
+                    <!-- Mobile Screen Content will dynamically update based on compliance status -->
+                    <div id="mobile-default-state" class="mobile-state active">
+                        <div class="phone-header">
+                            <span class="carrier">NevesSec Mobile</span>
+                            <span class="battery"><i class="fa-solid fa-battery-full"></i> 98%</span>
+                        </div>
+                        
+                        <div class="phone-body">
+                            <div class="mobile-icon success">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h2>Device Secured</h2>
+                            <p class="owner-tag" id="mobile-owner">Loading...</p>
+                            
+                            <div class="status-card-green">
+                                <p><strong>Compliance Status</strong>: COMPLIANT</p>
+                                <p><strong>Network Path</strong>: Intune/Jamf Connected</p>
+                                <p><strong>SSO Authorization</strong>: Allowed (Active)</p>
+                            </div>
+                            
+                            <p class="small-info">Your workstation has checked in successfully. No active incidents are logged for your account.</p>
+                        </div>
+                    </div>
+
+                    <!-- Isolated State -->
+                    <div id="mobile-isolated-state" class="mobile-state">
+                        <div class="phone-header">
+                            <span class="carrier" style="color: var(--danger);">SECURITY LOCKOUT</span>
+                            <span class="battery"><i class="fa-solid fa-battery-full"></i> 98%</span>
+                        </div>
+                        
+                        <div class="phone-body">
+                            <div class="mobile-icon danger">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <h2 style="color: var(--danger);">Access Suspended</h2>
+                            <p class="owner-tag" id="mobile-owner-isolated">Loading...</p>
+                            
+                            <div class="status-card-red">
+                                <p><strong>Workstation</strong>: <span id="isolated-dev-name">macbook</span></p>
+                                <p><strong>Security Event</strong>: Critical EDR Threat</p>
+                                <p><strong>SSO Status</strong>: SUSPENDED</p>
+                            </div>
+                            
+                            <p class="warning-text">
+                                Your workstation has been isolated from corporate resources to protect the network. 
+                            </p>
+
+                            <!-- Scan Progress Animation -->
+                            <div id="remediation-progress-box" style="display: none; width: 100%; margin-top: 1rem;">
+                                <p id="remediation-status-text" style="font-size: 0.8rem; color: var(--cyan); margin-bottom: 0.5rem;">Initializing scan...</p>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" id="remediation-bar"></div>
+                                </div>
+                            </div>
+
+                            <button id="remediate-btn" onclick="startRemediation()" class="btn btn-warning btn-block" style="margin-top: 1.5rem;">
+                                <i class="fa-solid fa-hand-holding-medical"></i> Run Remediation & Restore
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="app-footer">
+        <p>&copy; 2026 NevesSec Security Operations. Powered by FastAPI & SQLite.</p>
+    </footer>
+
+</body>
+</html>

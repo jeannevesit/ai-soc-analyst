@@ -86,10 +86,10 @@
         <div class="bio-content">
           <h2 class="section-title">About Me</h2>
           <p>
-            IT Analyst / Team Lead specializing in identity and access management — Entra ID, Active Directory, CyberArk, and privileged access governance — alongside endpoint management with Intune and Jamf. I'm currently pursuing an M.S. in Cybersecurity at NYU Tandon, where I've been building hands-on cloud security projects, including an automated SOC pipeline on GCP that uses Gemini, VirusTotal, and live honeypot telemetry for AI-driven threat triage.
+            IT Analyst / Team Lead specializing in endpoint security, device management (Intune, Jamf Pro), and automated threat containment pipelines. I'm currently pursuing an M.S. in Cybersecurity at NYU Tandon, where I build and deploy automated detection and response integrations that unify EDR alerts (Wazuh/CrowdStrike), MDM policies, and Identity Providers (Google Workspace/Entra ID) to secure enterprise devices with zero user friction.
           </p>
           <p>
-            My goal is to move deeper into identity and access engineering — combining IAM expertise, automation, and security operations to build access models that scale safely.
+            My goal is to specialize in endpoint security engineering—combining EDR customization, MDM automation, and incident response pipelines to enforce real-time compliance and protect organizational assets at scale.
           </p>
         </div>
       </div>
@@ -125,7 +125,66 @@
     <!-- Selected Projects Section -->
     <section id="projects" class="projects-section">
       <h2 class="section-title">Featured Security Projects</h2>
+
+      <!-- First Project: NevesSec ERCO Endpoint SOAR -->
       <div class="project-showcase">
+        <div class="project-inner">
+          <div class="project-info">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="project-tag"><i class="fa-solid fa-laptop-medical"></i> Endpoint SOAR</span>
+              <span class="project-tag live-status" style="background: rgba(48, 209, 88, 0.1); border: 1px solid rgba(48, 209, 88, 0.2); color: var(--success);"><span class="pulse-dot"></span> GCP Cloud Active</span>
+            </div>
+            <h3>NevesSec ERCO: Endpoint Response & Compliance Orchestrator</h3>
+            <p>
+              Developed and deployed a dual-mandate Endpoint Detection, Response, and MDM automation gateway that bridges security enforcement with user self-remediation.
+            </p>
+            <p>
+              Simulates critical EDR alerts (Wazuh/CrowdStrike) executing on endpoints, which trigger automated REST API calls to isolate devices via mock Mobile Device Management (MDM - Jamf/Intune) and suspend SSO sessions in Identity Providers (Google Workspace). Integrates a mobile-responsive employee self-remediation portal where users can scan their own systems, clean threats, and restore network access instantly.
+            </p>
+            
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>FastAPI</span>
+              <span>SQLite</span>
+              <span>Wazuh Webhooks</span>
+              <span>Intune/Jamf API</span>
+              <span>Google Admin SDK</span>
+              <span>Docker</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://erco.jeannevesit.com" target="_blank" class="btn btn-primary"><i class="fa-solid fa-up-right-from-square"></i> Open Live Portal</a>
+              <a href="https://github.com/jeannevesit/ai-soc-analyst/tree/main/endpoint-soar" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> Source Code</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="mockup-screen">
+              <div class="mockup-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="mockup-title">Orchestration Gateway</span>
+              </div>
+              <div class="mockup-body">
+                <div class="terminal-line"><span class="t-cyan">erco-soar:~$</span> tail -f data/orchestrator.log</div>
+                <div class="terminal-output">
+                  [22:04:12] [EDR_ALERT] CRITICAL CobaltStrike.Beacon on jean-macbook-pro.<br>
+                  [22:04:13] [MDM_API] POST /api/v1/devices/15/isolate -> Status: 202 Accepted.<br>
+                  [22:04:13] [IDP_API] POST /users/jean.neves/suspend -> G-Suite session revoked.
+                </div>
+                <div class="terminal-output green-text">
+                  [22:06:45] [SELF_HEAL] Local scan completed. Malware quarantined.<br>
+                  [22:06:46] [MDM_API] POST /api/v1/devices/15/restore -> Network active.<br>
+                  [22:06:46] [IDP_API] POST /users/jean.neves/unsuspend -> SSO session active.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Project: NevesSec SOAR Agent -->
+      <div class="project-showcase" style="margin-top: 3rem;">
         <div class="project-inner">
           <div class="project-info">
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">

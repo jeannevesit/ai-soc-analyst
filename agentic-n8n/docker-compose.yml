@@ -78,6 +78,19 @@ services:
     networks:
       - soc-network
 
+  endpoint-soar:
+    build:
+      context: ../endpoint-soar
+      dockerfile: Dockerfile
+    container_name: endpoint-soar
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ../endpoint-soar/data:/app/data
+    networks:
+      - soc-network
+
 volumes:
   n8n_data:
 
