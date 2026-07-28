@@ -24,3 +24,9 @@ agentic-n8n/mcp-server/blocklist.conf
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
