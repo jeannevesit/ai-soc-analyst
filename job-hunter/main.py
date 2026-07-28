@@ -163,17 +163,16 @@ async def trigger_scrape():
         INSERT INTO jobs (title, company, url, description, match_score, status)
         VALUES (?, ?, ?, ?, ?, ?)
     """, (
-        "Endpoint Security & Systems Engineer",
+        "Endpoint Security & Systems Engineer (Remote - US)",
         "SentinelOne",
         new_url,
-        "Deploy and monitor endpoint policies. Automate response scripts and patch configuration. Collaborate with IT and Security teams to enforce compliance baselines.",
+        "SentinelOne is hiring a remote Endpoint Security & Systems Engineer in the US. Deploy and monitor endpoint policies. Automate response scripts and patch configuration. Collaborate with IT and Security teams to enforce compliance baselines.",
         94,
         "PENDING_REVIEW"
     ))
     job_id = cursor.lastrowid
     
     drafts = [
-        ("cover_letter", "Cover Letter", "Dear SentinelOne Recruitment Team,\n\nI am writing to express my enthusiasm for the Endpoint Security & Systems Engineer opening. My background building automated EDR threat containment pipelines (Wazuh/Playwright/ n8n) and administering Microsoft Intune alignments at BTG Pactual and SPX Capital maps directly to your technical criteria.\n\nBest regards,\nJean Neves"),
         ("q_compliance", "How do you automate compliance verification?", "I deploy automated configuration baselines in Microsoft Intune and enforce them via conditional access. I also write custom PowerShell scripts to audit registry keys and verify endpoint protection agents are active in real-time.")
     ]
     

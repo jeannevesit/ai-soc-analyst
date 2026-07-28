@@ -365,16 +365,18 @@ body {
 }
 
 .pill-link {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+  background: rgba(48, 209, 88, 0.05);
+  border: 1px solid rgba(48, 209, 88, 0.3);
+  color: var(--success);
   text-decoration: none;
+  font-weight: 600;
   transition: var(--transition);
 }
 
 .pill-link:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--success-glow);
   color: var(--text);
+  box-shadow: 0 0 10px var(--success-glow);
 }
 
 .action-buttons {
@@ -410,12 +412,14 @@ body {
 
 .job-desc-summary {
   font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: 12px;
   color: var(--text-muted);
   line-height: 1.6;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .editor-field-input {
