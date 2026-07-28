@@ -51,30 +51,30 @@ def init_db():
 def seed_mock_data(conn):
     cursor = conn.cursor()
     
-    # Mock Jobs
+    # Real, Active Greenhouse Jobs
     jobs = [
         (
-            "Senior Security Endpoint Engineer",
-            "Dragos, Inc.",
-            "https://boards.greenhouse.io/dragos/jobs/4019283",
-            "Own the complete endpoint lifecycle including provisioning, configuration, and decommission using Microsoft Intune and Jamf Pro. Lead endpoint threat containment and optimize EDR/Wazuh alert detection policies.",
-            92,
+            "Security Engineer",
+            "Neuralink",
+            "https://boards.greenhouse.io/neuralink/jobs/4255745005",
+            "Triage and investigate alerts (endpoint, identity, network, cloud). Build and tune detections (SIEM, EDR, SOAR) and develop tools to scale security coverage. Harden systems including SSO/MFA, identity lifecycle, and endpoint management.",
+            95,
             "PENDING_REVIEW"
         ),
         (
-            "Security Endpoint Specialist",
-            "CrowdStrike",
-            "https://jobs.lever.co/crowdstrike/8a7b6c5d",
-            "Support corporate workstation security posture, deploy MDM configuration baselines, tune EDR rules, and administer identity mappings in Entra ID.",
-            85,
+            "Senior Security Engineer, Enterprise Security",
+            "Braze",
+            "https://boards.greenhouse.io/braze/jobs/5201198004",
+            "Protect employees, assets, and work locations. Lead malware and threat investigations, implement Data Loss Prevention (DLP), secure SaaS integrations, and harden OS configurations.",
+            91,
             "PENDING_REVIEW"
         ),
         (
-            "IAM & Systems Engineer",
-            "SPX Capital",
-            "https://boards.greenhouse.io/spxcapital/jobs/110293",
-            "Manage hybrid directory systems, deploy zero-trust access controls, manage Senha Segura PAM instances, and write custom PowerShell automation scripts.",
-            89,
+            "Cloud Security Engineer",
+            "Braze",
+            "https://boards.greenhouse.io/braze/jobs/5072036004",
+            "Day-to-day security operations including incident response, operating security tools (EDR, SIEM, vulnerability scanners), managing identity access controls, and driving vulnerability remediation.",
+            88,
             "PENDING_REVIEW"
         )
     ]
@@ -87,21 +87,21 @@ def seed_mock_data(conn):
         job_id = cursor.lastrowid
         
         # Add drafts based on the job
-        if "Dragos" in job[1]:
+        if "Neuralink" in job[1]:
             drafts = [
-                ("cover_letter", "Cover Letter", "Dear Hiring Team at Dragos,\n\nI am writing to express my strong interest in the Senior Security Endpoint Engineer role. With over 5 years of experience managing multi-platform fleets via Microsoft Intune and Jamf Pro, and currently pursuing my M.S. in Cybersecurity at NYU Tandon, I specialize in automating endpoint compliance and containment. I look forward to contributing to Dragos' critical infrastructure security mission.\n\nSincerely,\nJean Neves"),
-                ("q_mdm", "Describe your experience with MDM configuration at scale", "At BTG Pactual and SPX Capital, I managed Intune and Jamf MDM configurations for hybrid fleets. I built Autopilot provisioning pipelines, custom compliance baselines, and enforced Conditional Access, reducing provisioning errors and security compliance gaps by over 30%."),
-                ("q_edr", "How do you approach EDR threat containment?", "I deploy automated SOAR containment playbooks. If an EDR alert is triggered, my API gateway automatically calls the Intune isolate endpoint and suspends G-Suite SSO access in parallel. I balance this control with user self-remediation options to reduce helpdesk friction.")
+                ("cover_letter", "Cover Letter", "Dear Neuralink Hiring Team,\n\nI am writing to apply for the Security Engineer role. Combining 5+ years of endpoint security administration (Intune/Jamf Pro) and pursuing an M.S. in Cybersecurity at NYU Tandon, I specialize in building automated SIEM/EDR containment pipelines. I am highly motivated by your mission to secure the next generation of brain-computer interface platforms.\n\nBest regards,\nJean Neves"),
+                ("q_alert_triage", "Describe your experience triaging and investigating endpoint/identity alerts", "At BTG Pactual and SPX Capital, I served as the primary escalation point for identity and endpoint incidents. I triaged alerts, tracked indicator configurations, and managed user isolation workflows across global multi-platform environments."),
+                ("q_automation", "How have you built tools to scale security coverage?", "I built an API-driven orchestration dashboard (ERCO) that automatically receives EDR webhooks, isolates workstations via MDM APIs (Intune/Jamf), and locks G-Suite SSO sessions, minimizing response latency to under 10 seconds.")
             ]
-        elif "CrowdStrike" in job[1]:
+        elif "Senior Security Engineer" in job[0]:
             drafts = [
-                ("cover_letter", "Cover Letter", "Dear CrowdStrike Hiring Team,\n\nI am thrilled to apply for the Security Endpoint Specialist position. My background in tuning wazuh agents, deploying Intune policies, and administering privileged access fits perfectly with CrowdStrike's endpoint protection ecosystem.\n\nSincerely,\nJean Neves"),
-                ("q_entra", "What Entra ID / identity policies have you implemented?", "I regularly design and configure Entra ID Conditional Access policies, scoping endpoint DLP rules by user and device posture to enforce strict zero-trust access control across corporate and BYOD fleets.")
+                ("cover_letter", "Cover Letter", "Dear Braze Recruitment Team,\n\nI am excited to apply for the Senior Security Engineer, Enterprise Security position. My experience managing patch distribution via PDQ Deploy, enforcing device DLP baselines, and administering Active Directory matches your enterprise security goals.\n\nSincerely,\nJean Neves"),
+                ("q_dlp", "What is your approach to implementing Data Loss Prevention (DLP) policies?", "I enforce endpoint DLP policies scoped by user groups and device compliance states. By tying DLP rules with Intune/Entra ID Conditional Access, I ensure that corporate data is restricted on unauthorized or non-compliant workstations.")
             ]
         else:
             drafts = [
-                ("cover_letter", "Cover Letter", "Dear SPX Capital Team,\n\nI am writing to apply for the IAM & Systems Engineer position. Having managed Google Workspace, M365, and Senha Segura PAM systems previously, I am excited to help harden your directory architectures and security operations.\n\nSincerely,\nJean Neves"),
-                ("q_scripting", "Provide an example of a PowerShell automation script you wrote", "I wrote custom PowerShell monitoring and remediation scripts deployed via Intune to audit and quarantine unauthorized local administrator privileges across our global workstation fleet.")
+                ("cover_letter", "Cover Letter", "Dear Braze Team,\n\nI am applying for the Cloud Security Engineer role. With hands-on experience tuning wazuh agents, deploying OS compliance profiles, and managing privileged access, I am eager to help operate and scale your security tooling.\n\nSincerely,\nJean Neves"),
+                ("q_vulnerability", "How do you coordinate vulnerability remediation across a workstation fleet?", "I leverage MDM patching schedules integrated with asset compliance logs. I establish SLA-based compliance baselines in Intune to automatically push critical OS patches, using telemetry dashboards to track remediation rates.")
             ]
             
         for draft in drafts:
