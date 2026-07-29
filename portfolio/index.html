@@ -342,6 +342,58 @@
               </div>
             </div>
           </div>
+      <!-- Fourth Project: NevesSec JobHunter Agent -->
+      <div class="project-showcase" style="margin-top: 3rem;">
+        <div class="project-inner">
+          <div class="project-info">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="project-tag"><i class="fa-solid fa-user-check"></i> Autonomous Agent</span>
+              <span class="project-tag live-status" style="background: rgba(48, 209, 88, 0.1); border: 1px solid rgba(48, 209, 88, 0.2); color: var(--success);"><span class="pulse-dot"></span> GCP Cloud Active</span>
+            </div>
+            <h3>NevesSec JobHunter: AI Application Review Console</h3>
+            <p>
+              Developed an autonomous job hunting agent tailored for Endpoint Security & Systems Engineering roles. Automatically scans top security ATS portals (Greenhouse, Lever) for US-based remote postings matching candidate expertise.
+            </p>
+            <p>
+              Pre-drafts tailored technical responses and custom question fields, presenting them in an interactive review dashboard. Enables one-click candidate review, edit, and simulated browser application submission via Playwright automation.
+            </p>
+            
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>FastAPI</span>
+              <span>SQLite</span>
+              <span>Playwright</span>
+              <span>Docker</span>
+              <span>Cloudflare Tunnels</span>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://hunter.jeannevesit.com" target="_blank" class="btn btn-primary"><i class="fa-solid fa-up-right-from-square"></i> Open Live Portal</a>
+              <a href="https://github.com/jeannevesit/ai-soc-analyst/tree/main/job-hunter" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> Source Code</a>
+            </div>
+          </div>
+          <div class="project-visual">
+            <div class="mockup-screen">
+              <div class="mockup-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="mockup-title">JobHunter Agent Console</span>
+              </div>
+              <div class="mockup-body">
+                <div class="terminal-line"><span class="t-cyan">job-hunter:~$</span> tail -f data/automation.log</div>
+                <div class="terminal-output">
+                  [13:52:10] [DISCOVERY] Found: Staff Security Engineer at SmarterDx (95% Match).<br>
+                  [13:52:11] [LLM_DRAFT] Generated 2 technical answer drafts.<br>
+                  [13:52:11] [QUEUE] Added to human review queue.
+                </div>
+                <div class="terminal-output green-text">
+                  [13:55:04] [USER_APPROVE] Candidate approved application.<br>
+                  [13:55:06] [PLAYWRIGHT] Filled 4 form inputs. Application submitted.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
